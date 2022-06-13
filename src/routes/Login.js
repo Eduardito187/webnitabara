@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useQuery} from "@apollo/client";
 import {Validar_LOG} from './../query/consultas';
+/*
 function returnDATA() {
   const {loading, error, data} = useQuery(Validar_LOG, {
     variables: {
@@ -14,7 +15,7 @@ function returnDATA() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   return "<p>ok</p>";
-}
+}*/
 function Login() {
   const [Consultando, SetConsultando] = useState(false);
   const [Usuario, SetUsuario] = useState("");
@@ -61,7 +62,6 @@ function Login() {
                 </Button>
               </div>
             </Form>
-            {returnDATA()}
           </div>
         </div>
       </div>
