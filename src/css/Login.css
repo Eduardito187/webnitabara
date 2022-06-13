@@ -1,0 +1,66 @@
+.cuerpo-nita {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.centrado-centro {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: calc(50% + 225px);
+    border-radius: 5px;
+}
+
+.contenedor-login {
+    position: relative;
+}
+
+.contenedorIMG {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: -45px;
+}
+
+.imgLogin {
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+}
+
+.contenedorLogin {
+    padding: 100px 20px 20px 30px;
+    text-align: left;
+}
+
+@media only screen and (max-width: 500px) {
+    .centrado-centro {
+        width: 90%;
+        left: calc(50% - 45%);
+    }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 767px) {
+    .centrado-centro {
+        width: 450px;
+        left: calc(50% - 225px);
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1280px) {
+    .centrado-centro {
+        width: 400px;
+        left: calc(50% - 200px);
+    }
+}
+
+@media only screen and (min-width: 1281px) {
+    .centrado-centro {
+        width: 350px;
+        left: calc(50% - 175px);
+    }
+}

@@ -1,0 +1,35 @@
+body {
+    background-color: #d6d0d0;
+}
+
+.textSING {
+    color: #FFF;
+}
+
+@media only screen and (max-width: 500px) {
+    .textSING {
+        font-weight: 600;
+        font-size: 18px;
+    }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 767px) {
+    .textSING {
+        font-weight: 700;
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1280px) {
+    .textSING {
+        font-weight: 800;
+        font-size: 25px;
+    }
+}
+
+@media only screen and (min-width: 1281px) {
+    .textSING {
+        font-weight: 800;
+        font-size: 30px;
+    }
+}
