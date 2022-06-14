@@ -3,22 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
 
-// Initialize Apollo Client
+//Conexion con la api GRAPHQL
 const client = new ApolloClient({
   uri: 'http://nitabara.grazcompany.com/',
   cache: new InMemoryCache()
 });
 
-
+//ApolloProvider es el contenedor de toda el sistema WEB
+//client={client} es la conexion por defecto del proyecto a la API
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>
+  <ApolloProvider client={client} >
+    <App />
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
