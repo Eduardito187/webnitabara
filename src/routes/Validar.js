@@ -12,9 +12,9 @@ function Validar() {
       if (localStorage.Tipo=="Login") {
         //valida el login
         getData({ variables: { Usuario:localStorage.Usuario,Contra:localStorage.Contra } })
-        localStorage.Tipo = null;
-        localStorage.Usuario = null;
-        localStorage.Contra = null;
+        localStorage.removeItem('Tipo');
+        localStorage.removeItem('Usuario');
+        localStorage.removeItem('Contra');
       }
     }
     //navegacion
