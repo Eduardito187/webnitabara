@@ -43,19 +43,24 @@ function Validar() {
       );
     }
     if (data!=null) {
-      //Encriptacion AES
-      var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), clave).toString();
-      localStorage.ID_USER = ciphertext;
-      navigate(-1);
-      return(
-        <div className="cuerpoSUCCESS">
-          <div className="vertical-center">
-            <div className="cuadro">
-              <h1>Bienvenido!!</h1>
+      if (data.validacion_login!=null) {
+        if (data.validacion_login.estado) {
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data.validacion_login.id_cuenta), clave).toString();
+          localStorage.ID_USER = ciphertext;
+          navigate(-1);
+          return(
+            <div className="cuerpoSUCCESS">
+              <div className="vertical-center">
+                <div className="cuadro">
+                  <h1>Bienvenido!!</h1>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      );
+          );
+        }else{
+          navigate(-1);
+        }
+      }
     }else if(localStorage.Tipo!=null && data==null) {
       validarAcciones();
       return(
