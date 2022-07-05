@@ -49,6 +49,17 @@ export const Consulta_Cuenta = gql `
         FechaActualizado
         FechaEliminado
       }
+    }
+  }
+`;
+export const Consulta_Cuenta_Roles = gql `
+  query Usuario(
+    $ID: Int!
+    ) {
+      Usuario(
+        ID: $ID
+      ) {
+      ID
       Roles {
         ID
         Rol {

@@ -9,6 +9,7 @@ import { Button, Dropdown, Layout, Menu } from 'antd';
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Roles from './Etiquetas/Roles';
+import RolesMenu from './Etiquetas/RolesMenu';
 
 
 const { Header, Sider, Content } = Layout;
@@ -66,29 +67,7 @@ const Inicio: React.FC = () => {
             <div className="logo" style={{width:'100%',height:'auto',paddingTop:'25px',paddingBottom:'25px'}}>
               <img src="./dist/logo.png" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
             </div>
-            <Menu
-              theme="light"
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              style={{height:'100vh'}}
-              items={[
-                {
-                  key: '1',
-                  icon: <UserOutlined />,
-                  label: 'nav 1',
-                },
-                {
-                  key: '2',
-                  icon: <VideoCameraOutlined />,
-                  label: 'nav 2',
-                },
-                {
-                  key: '3',
-                  icon: <UploadOutlined />,
-                  label: 'nav 3',
-                },
-              ]}
-            />
+            <RolesMenu key={'role'} />
           </Sider>
           <Layout className="site-layout">
           <Menu mode="horizontal" defaultSelectedKeys={['mail']}>
@@ -100,7 +79,7 @@ const Inicio: React.FC = () => {
             </div>
             <div style={{width:'250px',justifyContent:'center',textAlign:'center',fontWeight:'bold',color:'purple',fontSize:'20px',float:'right'}}>
               <Dropdown overlay={menu} placement="bottomRight">
-                <Button>bottomRight</Button>
+                <Button>Click Aqui</Button>
               </Dropdown>
             </div>
           </Menu>
