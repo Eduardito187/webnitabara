@@ -45,8 +45,7 @@ function Validar() {
     if (data!=null) {
       if (data.validacion_login!=null) {
         if (data.validacion_login.estado) {
-          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data.validacion_login.id_cuenta), clave).toString();
-          localStorage.ID_USER = ciphertext;
+          localStorage.ID_USER = parseInt(data.validacion_login.id_cuenta);
           navigate(-1);
           return(
             <div className="cuerpoSUCCESS">
