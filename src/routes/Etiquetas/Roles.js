@@ -40,6 +40,7 @@ function Roles() {
                 <div className="cuerpoSUCCESS">
                     <div className="vertical-center">
                         <div className="cuadro">
+                            <img src={data.Usuario.Perfil.URLPublica} style={{width:'100px',height:'100px',borderRadius:'50px'}} />
                             <h1>Bienvenido <strong>{data.Usuario.Persona.Nombre + ' '+data.Usuario.Persona.Paterno+' '+data.Usuario.Persona.Materno}</strong></h1>
                             {
                                 data.Usuario.Roles.map((j) => (

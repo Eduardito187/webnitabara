@@ -39,6 +39,16 @@ export const Consulta_Cuenta = gql `
         FechaActualizado
         FechaEliminado
       }
+      Perfil {
+        ID
+        URLPublica
+        Direccion
+        Peso
+        Formato
+        FechaCreado
+        FechaActualizado
+        FechaEliminado
+      }
       Roles {
         ID
         Rol {
