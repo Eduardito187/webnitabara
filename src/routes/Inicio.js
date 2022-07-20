@@ -5,96 +5,38 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Button, Dropdown, Layout, Menu } from 'antd';
+import { Button, Dropdown, Avatar,Layout, Menu } from 'antd';
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Roles from './Etiquetas/Roles';
 import RolesMenu from './Etiquetas/RolesMenu';
+import MenuAside from './Etiquetas/MenuAside';
+import NavMenu from './Etiquetas/NavMenu';
+import PanelNita from './Etiquetas/PanelNita';
+import NOLOG from './Etiquetas/NOLOG';
+/*
 
+<RolesMenu key={'role'} />
+<Roles />
+*/
 
 const { Header, Sider, Content } = Layout;
 
 const Inicio: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
-  function CerrarSession() {
-    localStorage.removeItem('ID_USER');
-    navigate("/");
-  }
-  const menu = (
-    <Menu
-      items={[
-        {
-          key: '1',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-              Mi Perfil
-            </a>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-              Ajustes
-            </a>
-          ),
-        },
-        {
-          key: '3',
-          label: (
-            <a href="#" rel="noopener noreferrer" onClick={()=>CerrarSession()}>
-              Cerrar Session
-            </a>
-          ),
-        },
-      ]}
-    />
-  );
   if (localStorage.ID_USER==null) {
-    navigate("/");
-    return (
-      <div>
-        <h1>No has iniciado Session.</h1>
-        <a href='/'>Login</a>
-      </div>
-    );
+    return <NOLOG />;
   }else{
     return (
-      <div style={{width:'100%',height:'100%'}}>
-        <Layout style={{width:'100%',height:'100%'}}>
-          <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
-            <div className="logo" style={{width:'100%',height:'auto',paddingTop:'25px',paddingBottom:'25px'}}>
-              <img src="./dist/logo.png" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
-            </div>
-            <RolesMenu key={'role'} />
-          </Sider>
-          <Layout className="site-layout">
-          <Menu mode="horizontal" defaultSelectedKeys={['mail']}>
-            <div style={{width:'60px',justifyContent:'center',textAlign:'center',fontWeight:'bold',color:'purple',fontSize:'20px'}}>
-              {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: 'trigger',
-                onClick: () => setCollapsed(!collapsed),
-              })}
-            </div>
-            <div style={{width:'250px',justifyContent:'center',textAlign:'center',fontWeight:'bold',color:'purple',fontSize:'20px',float:'right'}}>
-              <Dropdown overlay={menu} placement="bottomRight">
-                <Button>Click Aqui</Button>
-              </Dropdown>
-            </div>
-          </Menu>
-            <Content
-              className="site-layout-background"
-              style={{
-                margin: '24px 16px',
-                padding: 24,
-              }}
-            >
-              <Roles />
-            </Content>
-          </Layout>
+      <Layout style={{width:'100%',height:'100%'}}>
+        <MenuAside collapsed={collapsed}/>
+        <Layout className="site-layout">
+          <NavMenu setCollapsed={setCollapsed} collapsed={collapsed} />
+          <Content className="site-layout-background" style={{margin: '24px 16px',padding: 24,}}>
+            <PanelNita />
+          </Content>
         </Layout>
-      </div>
+      </Layout>
     );
   }
 };

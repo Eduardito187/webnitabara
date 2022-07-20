@@ -36,7 +36,16 @@
         transform: rotate(360deg);
     }
 }
-
+.pointer{
+    cursor: pointer;
+}
+.site-statistic-demo-card {
+    padding: 30px;
+    background: #ececec;
+}
+.bgblanco{
+    background-color: #fff;
+}
 #components-layout-demo-custom-trigger .trigger {
     padding: 0 24px;
     font-size: 18px;
