@@ -24,13 +24,13 @@ function MenuAside(props) {
                 <img src="./dist/logo.png" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
             </div>
             <Menu>
-                <Menu.Item onClick={()=>IrRuta("/Inicio")}>
+                <Menu.Item key={'PANEL_NITA'} onClick={()=>IrRuta("/Inicio")}>
                     <DashboardOutlined size={"small"} /> <b>{retornarTEXTO('Panel NITABARA')}</b>
                 </Menu.Item>
-                <Menu.Item onClick={()=>IrRuta("/Usuarios")}>
+                <Menu.Item key={'Usuarios'} onClick={()=>IrRuta("/Usuarios")}>
                     <UserOutlined size={"small"} /> <b>{retornarTEXTO('Usuarios')}</b>
                 </Menu.Item>
-                <Menu.Item onClick={()=>IrRuta("/Roles")}>
+                <Menu.Item key={'Roles'} onClick={()=>IrRuta("/Roles")}>
                     <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Roles')}</b>
                 </Menu.Item>
             </Menu>

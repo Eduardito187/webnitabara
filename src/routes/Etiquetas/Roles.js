@@ -7,7 +7,7 @@ import { clave } from '../../Crypt';
 var CryptoJS = require("crypto-js");
 function Roles() {
     function validarAcciones() {
-        getData({ variables: { ID:parseInt(localStorage.ID_USER) } });
+      getData({ variables: { ID:parseInt(localStorage.ID_USER) } });
     }
     //navegacion
     const navigate = useNavigate();

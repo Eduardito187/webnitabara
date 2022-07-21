@@ -1,71 +1,111 @@
-import { Divider, Radio, Table } from 'antd';
+import {EditOutlined} from '@ant-design/icons';
+import { Row, Col, Button, Table, Input, Divider } from 'antd';
 import React, { useState } from 'react';
+import { useMutation,useLazyQuery } from '@apollo/client';
+import {UsuariosLista} from '../../query/consultas';
+import Cargando from "../../routes/Etiquetas/Cargando";
+import ErrorDB from './ErrorDB';
+import ErrorNULL from './ErrorNULL';
+
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: 'Usuario',
+    dataIndex: 'Usuario',
+    key: 'ID+Math.random()',
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
+    title: 'Nombre',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.Nombre}</a>
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Apellidos',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.Paterno+' '+text.Materno}</a>
   },
+  {
+    title: 'Correo',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.Correo}</a>
+  },
+  {
+    title: 'Telefono',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.Telefono}</a>
+  },
+  {
+    title: 'Documento',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.CI}</a>
+  },
+  {
+    title: 'Tipo Documento',
+    dataIndex: 'Persona',
+    key: 'ID+Math.random()',
+    render: (text) => <a>{text.TipoDocumento.Tipo}</a>
+  },
+  {
+    title: 'Accion',
+    dataIndex: 'ID',
+    key: 'ID+Math.random()',
+    render: (text) => <Button icon={<EditOutlined />}>Editar</Button>
+  }
 ];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
-  },
-]; // rowSelection object indicates the need for row selection
-
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
   getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
+    //disabled: record.name === 'Disabled User',
     // Column configuration not to be checked
     name: record.name,
   }),
 };
 
 const TablaUsuarios = () => {
-  return (
-    <div>
-      <Table
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
-        }}
-        columns={columns}
-        dataSource={data}
-      />
-    </div>
-  );
+  function validarAcciones() {
+    getData();
+  }
+  const [getData, { loading, error, data }] = useLazyQuery(UsuariosLista);
+
+  if (loading){
+    return <Cargando />;
+  }
+  if (error){
+    return <ErrorDB />
+  }
+  if (data!=null) {
+    return (
+      <div>
+        <Row gutter={16}>
+          <Col span={6}>
+            <Button type="primary" style={{backgroundColor:'#b7eb8f',borderColor:'#b7eb8f'}}>
+              Agregar Usuario
+            </Button>
+            <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
+              Eliminar
+            </Button>
+          </Col>
+          <Col span={12}>
+          </Col>
+          <Col span={6}>
+            <Input.Search allowClear style={{ width: '100%' }} defaultValue="" />
+          </Col>
+        </Row>
+        <Divider />
+        <Table key={'TABLA'} rowSelection={{type: "checkbox",...rowSelection,}} columns={columns} dataSource={data.Usuarios} />
+      </div>
+      );
+  }else{
+    validarAcciones();
+    return <ErrorNULL />;
+  }
 };
 
 export default TablaUsuarios;

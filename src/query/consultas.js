@@ -15,12 +15,8 @@ export const Validar_LOG = gql `
   }
 `;
 export const Consulta_Cuenta = gql `
-  query Usuario(
-    $ID: Int!
-    ) {
-      Usuario(
-        ID: $ID
-      ) {
+  query Usuario($ID: Int!) {
+      Usuario(ID: $ID) {
       ID
       Usuario
       Persona {
@@ -53,18 +49,36 @@ export const Consulta_Cuenta = gql `
   }
 `;
 export const Consulta_Cuenta_Roles = gql `
-  query Usuario(
-    $ID: Int!
-    ) {
-      Usuario(
-        ID: $ID
-      ) {
+  query Usuario($ID: Int!) {
+      Usuario(ID: $ID) {
       ID
       Roles {
         ID
         Rol {
           ID
           Rol
+        }
+      }
+    }
+  }
+`;
+export const UsuariosLista = gql `
+  query Usuarios {
+    Usuarios{
+      ID
+      Usuario
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+        TipoDocumento {
+          ID
+          Tipo
         }
       }
     }
