@@ -142,7 +142,7 @@ const EditarUsuario = (props) => {
                         Editar Usuario
                     </Button>
                     <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
-                    Eliminar
+                        Eliminar
                     </Button>
                 </Form.Item>
                 

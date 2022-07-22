@@ -194,3 +194,19 @@ export const EditarUsuarioAPI = gql `
     }
   }
 `;
+export const RolesAPI = gql `
+  query Roles {
+    Roles {
+      ID
+      Rol
+      RolPermiso {
+        ID
+        Permiso {
+          ID
+          Nombre
+          Codigo
+        }
+      }
+    }
+  }
+`;
