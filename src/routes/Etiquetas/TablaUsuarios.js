@@ -7,6 +7,10 @@ import Cargando from "../../routes/Etiquetas/Cargando";
 import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
 
+function editUSER(a) {
+  window.location.href = a;
+}
+
 const columns = [
   {
     title: 'Usuario',
@@ -54,7 +58,7 @@ const columns = [
     title: 'Accion',
     dataIndex: 'ID',
     key: 'ID+Math.random()',
-    render: (text) => <Button icon={<EditOutlined />}>Editar</Button>
+    render: (text) => <Button icon={<EditOutlined />} onClick={()=>editUSER("/Usuario/"+text)}>Editar</Button>
   }
 ];
 const rowSelection = {
@@ -72,6 +76,9 @@ const TablaUsuarios = () => {
   function validarAcciones() {
     getData();
   }
+  function IrUrl(a) {
+    window.location.href = a;
+  }
   const [getData, { loading, error, data }] = useLazyQuery(UsuariosLista);
 
   if (loading){
@@ -85,7 +92,7 @@ const TablaUsuarios = () => {
       <div>
         <Row gutter={16}>
           <Col span={6}>
-            <Button type="primary" style={{backgroundColor:'#b7eb8f',borderColor:'#b7eb8f'}}>
+            <Button type="primary" onClick={()=>IrUrl("/RegistrarUsuario")} style={{backgroundColor:'#b7eb8f',borderColor:'#b7eb8f'}}>
               Agregar Usuario
             </Button>
             <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>

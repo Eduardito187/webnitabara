@@ -84,3 +84,35 @@ export const UsuariosLista = gql `
     }
   }
 `;
+export const Ciudades = gql `
+  query Ciudades {
+    Ciudades {
+      ID
+      Nombre
+    }
+  }
+`;
+export const Zonas = gql `
+  query Zonas {
+    Zonas {
+      ID
+      Nombre
+    }
+  }
+`;
+export const Barrios = gql `
+  query Barrios {
+    Barrios {
+      ID
+      Nombre
+    }
+  }
+`;
+export const TiposDocumentos = gql `
+  query TipoDocumentos {
+    TipoDocumentos {
+      ID
+      Nombre
+    }
+  }
+`;
