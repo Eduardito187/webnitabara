@@ -78,7 +78,7 @@ export const UsuariosLista = gql `
         Nacimiento
         TipoDocumento {
           ID
-          Tipo
+          Nombre
         }
       }
     }
