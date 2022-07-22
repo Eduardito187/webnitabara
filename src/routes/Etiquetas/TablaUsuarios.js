@@ -52,7 +52,7 @@ const columns = [
     title: 'Tipo Documento',
     dataIndex: 'Persona',
     key: 'ID+Math.random()',
-    render: (text) => <a>{text.TipoDocumento.Tipo}</a>
+    render: (text) => <a>{text.TipoDocumento.Nombre}</a>
   },
   {
     title: 'Accion',

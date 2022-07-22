@@ -1,10 +1,11 @@
 import { Button, Select, Form, Input, DatePicker } from 'antd';
 import * as React from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Ciudades,Zonas,Barrios,TiposDocumentos} from "./../../query/consultas";
+import {Ciudades,Zonas,Barrios,TiposDocumentos,NuevoUsuario} from "./../../query/consultas";
 
 const CrearUsuario = () => {
     const load = React.useState(false);
+    const [SetUser, { loading:Cargando_User, error:Error_User, data:Data_User }] = useMutation(NuevoUsuario);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
     const [GetBarrios, { loading:Cargando_Barrio, error:Error_Barrio, data:Data_Barrios }] = useLazyQuery(Barrios);
     const [GetTipoDoc, { loading:Cargando_TipoDoc, error:Error__TipoDoc, data:Data_TipoDoc }] = useLazyQuery(TiposDocumentos);
@@ -18,6 +19,23 @@ const CrearUsuario = () => {
     }, [load]);
 
     const onFinish = (values) => {
+        SetUser({ variables: {
+            Email: values.Email,
+            Telefono: values.Telefono,
+            barrio: values.barrio,
+            calle: values.calle,
+            casa: values.casa,
+            ci: values.ci,
+            ciudad: values.ciudad,
+            contra: values.contra,
+            documento: values.documento,
+            materno: values.materno,
+            paterno: values.paterno,
+            nombre: values.nombre,
+            usuario: values.usuario,
+            zona: values.zona,
+            nacimiento: values.nacimiento._i
+        } });
         console.log('Success:', values);
     };
 
@@ -33,7 +51,7 @@ const CrearUsuario = () => {
     };
 
   return (
-    <Form name="basic" labelCol={{span: 6}} wrapperCol={{span: 16}} initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
+    <Form name="basic" labelCol={{span: 6}} wrapperCol={{span: 16}} style={{textAlign:'left'}} initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
         <Form.Item label="Nombre" name="nombre" rules={[{required: true,message: 'Ingrese el usuario!'}]} >
             <Input />
         </Form.Item>
@@ -115,9 +133,6 @@ const CrearUsuario = () => {
         <Form.Item wrapperCol={{offset: 0,span: 12}} >
             <Button type="primary" htmlType="submit">
                 Registrar Usuario
-            </Button>
-            <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
-              Eliminar
             </Button>
         </Form.Item>
         

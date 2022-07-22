@@ -116,3 +116,81 @@ export const TiposDocumentos = gql `
     }
   }
 `;
+export const NuevoUsuario = gql `
+  mutation Registrar_Usuario(
+    $Email: String!
+    $Telefono: String!
+    $barrio: Int!
+    $calle: String!
+    $casa: String!
+    $ci: String!
+    $ciudad: Int!
+    $contra: String!
+    $documento: Int!
+    $materno: String!
+    $paterno: String!
+    $nombre: String!
+    $usuario: String!
+    $zona: Int!
+    $nacimiento: String!
+  ) {
+    Registrar_Usuario(
+      Email: $Email
+      Telefono: $Telefono
+      barrio: $barrio
+      calle: $calle
+      casa: $casa
+      ci: $ci
+      ciudad: $ciudad
+      contra: $contra
+      documento: $documento
+      materno: $materno
+      paterno: $paterno
+      nombre: $nombre
+      usuario: $usuario
+      zona: $zona
+      nacimiento: $nacimiento
+    ){
+      response
+    }
+  }
+`;
+export const EditarUsuarioAPI = gql `
+  query Usuario($ID: Int!) {
+    Usuario(ID: $ID) {
+      ID
+      Usuario
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+        TipoDocumento {
+          ID
+          Nombre
+        }
+        Ciudad {
+          ID
+          Nombre
+        }
+        Direccion {
+          ID
+          Zona {
+            ID
+            Nombre
+          }
+          Barrio {
+            ID
+            Nombre
+          }
+          Calle
+          Casa
+        }
+      }
+    }
+  }
+`;

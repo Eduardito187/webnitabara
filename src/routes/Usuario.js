@@ -29,7 +29,7 @@ const Usuario: React.FC = (props) => {
                     <Row>
                         <Col span={12}>
                             <div style={{padding:'5px'}}>
-                                <EditarUsuario />
+                                <EditarUsuario ID={ID} />
                             </div>
                         </Col>
                         <Col span={12} style={{backgroundColor:'black'}}>
