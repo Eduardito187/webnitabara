@@ -2,9 +2,11 @@ import { Button, Select, Form, Input, DatePicker } from 'antd';
 import * as React from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {Ciudades,Zonas,Barrios,TiposDocumentos,NuevoUsuario} from "./../../query/consultas";
+import {NotificacionNitabara} from "./Notificar";
 
 const CrearUsuario = () => {
     const load = React.useState(false);
+    const [form] = Form.useForm();
     const [SetUser, { loading:Cargando_User, error:Error_User, data:Data_User }] = useMutation(NuevoUsuario);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
     const [GetBarrios, { loading:Cargando_Barrio, error:Error_Barrio, data:Data_Barrios }] = useLazyQuery(Barrios);
@@ -18,7 +20,27 @@ const CrearUsuario = () => {
         GetZonas();
     }, [load]);
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+
     const onFinish = (values) => {
+        let date_time = "";
+        if (values.nacimiento._i!=null) {
+            date_time = values.nacimiento._i;
+        }else{
+            date_time = formatDate(values.nacimiento._d);
+        }
         SetUser({ variables: {
             Email: values.Email,
             Telefono: values.Telefono,
@@ -34,9 +56,11 @@ const CrearUsuario = () => {
             nombre: values.nombre,
             usuario: values.usuario,
             zona: values.zona,
-            nacimiento: values.nacimiento._i
+            nacimiento: date_time
         } });
         console.log('Success:', values);
+        form.resetFields();
+        NotificacionNitabara('success','NITABARA','Usuario registrado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -51,7 +75,7 @@ const CrearUsuario = () => {
     };
 
   return (
-    <Form name="basic" labelCol={{span: 6}} wrapperCol={{span: 16}} style={{textAlign:'left'}} initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
+    <Form name="basic" form={form} labelCol={{span: 6}} wrapperCol={{span: 16}} style={{textAlign:'left'}} initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
         <Form.Item label="Nombre" name="nombre" rules={[{required: true,message: 'Ingrese el usuario!'}]} >
             <Input />
         </Form.Item>

@@ -8,12 +8,12 @@ import {
   import { Button, Dropdown, Avatar,Layout, Menu } from 'antd';
   import React, { useState } from 'react';
   import {useNavigate} from 'react-router-dom';
-  import Roles from './Etiquetas/Roles';
-  import RolesMenu from './Etiquetas/RolesMenu';
-  import MenuAside from './Etiquetas/MenuAside';
-  import NavMenu from './Etiquetas/NavMenu';
-  import TablaUsuarios from './Etiquetas/TablaUsuarios';
-  import NOLOG from './Etiquetas/NOLOG';
+  import Roles from '../Etiquetas/Roles';
+  import RolesMenu from '../Etiquetas/RolesMenu';
+  import MenuAside from '../Etiquetas/MenuAside';
+  import NavMenu from '../Etiquetas/NavMenu';
+  import TablaUsuarios from '../Etiquetas/TablaUsuarios';
+  import NOLOG from '../Etiquetas/NOLOG';
   /*
   
   <RolesMenu key={'role'} />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './../css/Validar.css';
+import './../../css/Validar.css';
 import { useMutation } from '@apollo/client';
-import {Validar_LOG} from '../query/consultas';
+import {Validar_LOG} from '../../query/consultas';
 import {useNavigate} from 'react-router-dom';
-import { clave } from '../Crypt';
+import { clave } from '../../Crypt';
 var CryptoJS = require("crypto-js");
 //uso de la libreria Crypto-js
 

@@ -210,3 +210,53 @@ export const RolesAPI = gql `
     }
   }
 `;
+export const UpdateUsuario = gql `
+  mutation Editar_Usuario(
+    $ID: Int!
+    $Email: String!
+    $Telefono: String!
+    $barrio: Int!
+    $calle: String!
+    $casa: String!
+    $ci: String!
+    $ciudad: Int!
+    $documento: Int!
+    $materno: String!
+    $paterno: String!
+    $nombre: String!
+    $usuario: String!
+    $zona: Int!
+    $nacimiento: String!
+  ) {
+    Editar_Usuario(
+      ID: $ID
+      Email: $Email
+      Telefono: $Telefono
+      barrio: $barrio
+      calle: $calle
+      casa: $casa
+      ci: $ci
+      ciudad: $ciudad
+      documento: $documento
+      materno: $materno
+      paterno: $paterno
+      nombre: $nombre
+      usuario: $usuario
+      zona: $zona
+      nacimiento: $nacimiento
+    ){
+      response
+    }
+  }
+`;
+export const DeleteUsuario = gql `
+  mutation Eliminar_Usuario(
+    $ID: Int!
+  ) {
+    Eliminar_Usuario(
+      ID: $ID
+    ){
+      response
+    }
+  }
+`;

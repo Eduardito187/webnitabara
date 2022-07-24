@@ -1,14 +1,17 @@
 import { Button, Select, Form, Input, DatePicker } from 'antd';
 import * as React from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Ciudades,Zonas,Barrios,TiposDocumentos,EditarUsuarioAPI} from "./../../query/consultas";
+import {Ciudades,Zonas,Barrios,TiposDocumentos,EditarUsuarioAPI,UpdateUsuario,DeleteUsuario} from "../../query/consultas";
 import Cargando from './Cargando';
 import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
 import moment from 'moment';
+import {NotificacionNitabara} from "./Notificar";
 const dateFormat = 'YYYY-MM-DD';
 const EditarUsuario = (props) => {
     const load = React.useState(false);
+    const [SetEditUser, { loading:Cargando_SetUser, error:Error_SetUser, data:Data_SetUser }] = useMutation(UpdateUsuario);
+    const [DelEditUser, { loading:Cargando_DelUser, error:Error_DelUser, data:Data_DelUser }] = useMutation(DeleteUsuario);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
     const [GetBarrios, { loading:Cargando_Barrio, error:Error_Barrio, data:Data_Barrios }] = useLazyQuery(Barrios);
     const [GetTipoDoc, { loading:Cargando_TipoDoc, error:Error__TipoDoc, data:Data_TipoDoc }] = useLazyQuery(TiposDocumentos);
@@ -23,8 +26,51 @@ const EditarUsuario = (props) => {
         GetUserAPI({ variables: {ID:parseInt(props.ID)}});
     }, [load]);
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
+
+    function EliminarUser() {
+        DelEditUser({ variables: {ID:parseInt(props.ID)} });
+        NotificacionNitabara('info','NITABARA','Usuario eliminado.');
+    }
+
     const onFinish = (values) => {
+        let date_time = "";
+        if (values.nacimiento._i!=null) {
+            date_time = values.nacimiento._i;
+        }else{
+            date_time = formatDate(values.nacimiento._d);
+        }
         console.log('Success:', values);
+        SetEditUser({ variables: {
+            ID:parseInt(props.ID),
+            Email: values.Email,
+            Telefono: values.Telefono,
+            barrio: values.barrio,
+            calle: values.calle,
+            casa: values.casa,
+            ci: values.ci,
+            ciudad: values.ciudad,
+            documento: values.documento,
+            materno: values.materno,
+            paterno: values.paterno,
+            nombre: values.nombre,
+            usuario: values.usuario,
+            zona: values.zona,
+            nacimiento: date_time
+        } });
+        NotificacionNitabara('success','NITABARA','Usuario editado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -53,11 +99,7 @@ const EditarUsuario = (props) => {
                 Email : Data_User.Usuario.Persona.Correo,
                 Telefono : Data_User.Usuario.Persona.Telefono,
                 nacimiento : moment(Data_User.Usuario.Persona.Nacimiento,dateFormat),
-                documento : Data_User.Usuario.Persona.TipoDocumento.ID,
                 ci : Data_User.Usuario.Persona.CI,
-                ciudad : Data_User.Usuario.Persona.Ciudad.ID,
-                zona : Data_User.Usuario.Persona.Direccion.Zona.ID,
-                barrio : Data_User.Usuario.Persona.Direccion.Barrio.ID,
                 calle : Data_User.Usuario.Persona.Direccion.Calle,
                 casa : Data_User.Usuario.Persona.Direccion.Casa,
                 usuario : Data_User.Usuario.Usuario
@@ -80,7 +122,7 @@ const EditarUsuario = (props) => {
                 <Form.Item label="Fecha de Nacimiento" name="nacimiento" rules={[{required: true,message: 'Ingrese la Fecha de Nacimiento!'}]}>
                     <DatePicker style={{width:'100%'}}/>
                 </Form.Item>
-                <Form.Item label="Tipo de Documento" name="documento" rules={[{required: true,message: 'Seleccione el Tipo de Documento!'}]}>
+                <Form.Item label="Tipo de Documento" initialValue={Data_User.Usuario.Persona.TipoDocumento.ID} name="documento" rules={[{required: true,message: 'Seleccione el Tipo de Documento!'}]}>
                     <Select showSearch placeholder="Seleccione un Tipo de Documento" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                         {
                             Data_TipoDoc!=null
@@ -94,7 +136,7 @@ const EditarUsuario = (props) => {
                 <Form.Item label="CI" name="ci" rules={[{required: true,message: 'Ingrese el CI!'}]} >
                     <Input />
                 </Form.Item>
-                <Form.Item label="Ciudad" name="ciudad" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
+                <Form.Item label="Ciudad" initialValue={Data_User.Usuario.Persona.Ciudad.ID} name="ciudad" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
                     <Select showSearch placeholder="Seleccione una Ciudad" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                         {
                             Data_Ciudades!=null
@@ -105,7 +147,7 @@ const EditarUsuario = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label="Zona" name="zona" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
+                <Form.Item label="Zona" initialValue={Data_User.Usuario.Persona.Direccion.Zona.ID} name="zona" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
                     <Select showSearch placeholder="Seleccione una Zona" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                         {
                             Data_Zonas!=null
@@ -116,7 +158,7 @@ const EditarUsuario = (props) => {
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label="Barrio" name="barrio" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
+                <Form.Item label="Barrio" initialValue={Data_User.Usuario.Persona.Direccion.Barrio.ID} name="barrio" rules={[{required: true,message: 'Seleccione la Ciudad!'}]}>
                     <Select showSearch placeholder="Seleccione un Barrio" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                         {
                             Data_Barrios!=null
@@ -141,7 +183,7 @@ const EditarUsuario = (props) => {
                     <Button type="primary" htmlType="submit">
                         Editar Usuario
                     </Button>
-                    <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
+                    <Button type="primary" onClick={()=>EliminarUser()} style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
                         Eliminar
                     </Button>
                 </Form.Item>

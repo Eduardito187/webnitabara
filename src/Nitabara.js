@@ -2,14 +2,14 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route,Navigate } from 'react-router-dom';
 import Cargando from './routes/Etiquetas/Cargando';
 import 'bootstrap/dist/css/bootstrap.min.css';
-const Login = lazy(() => import('./routes/Login'));
-const Inicio = lazy(() => import('./routes/Inicio'));
-const Validar = lazy(() => import('./routes/Validar'));
-const Usuarios = lazy(() => import('./routes/Usuarios'));
-const Usuario = lazy(() => import('./routes/Usuario'));
-const RegistrarUsuario = lazy(() => import('./routes/RegistrarUsuario'));
-const Roles = lazy(() => import('./routes/Roles'));
-const Error404 = lazy(() => import('./routes/Error404'));
+const Login = lazy(() => import('./routes/Login/Login'));
+const Inicio = lazy(() => import('./routes/Inicio/Inicio'));
+const Validar = lazy(() => import('./routes/Etiquetas/Validar'));
+const Usuarios = lazy(() => import('./routes/Usuarios/Usuarios'));
+const Usuario = lazy(() => import('./routes/Usuarios/Usuario'));
+const RegistrarUsuario = lazy(() => import('./routes/Usuarios/RegistrarUsuario'));
+const Roles = lazy(() => import('./routes/Roles/Roles'));
+const Error404 = lazy(() => import('./routes/404/Error404'));
 
 const Nitabara = (props) => (
   <Router>

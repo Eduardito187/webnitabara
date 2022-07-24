@@ -7,11 +7,11 @@ import {
   } from '@ant-design/icons';
 import { Row, Col, Button, Dropdown, Avatar,Layout, Menu } from 'antd';
 import React, { useState } from 'react';
-import MenuAside from './Etiquetas/MenuAside';
-import NavMenu from './Etiquetas/NavMenu';
-import NOLOG from './Etiquetas/NOLOG';
+import MenuAside from '../Etiquetas/MenuAside';
+import NavMenu from '../Etiquetas/NavMenu';
+import NOLOG from '../Etiquetas/NOLOG';
 import { useParams } from 'react-router';
-import EditarUsuario from './Etiquetas/EditarUsuario';
+import EditarUsuario from '../Etiquetas/EditarUsuario';
 const { Header, Sider, Content } = Layout;
   
 const Usuario: React.FC = (props) => {

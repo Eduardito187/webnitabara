@@ -8,11 +8,11 @@ import {
   import { Button, Dropdown, Avatar,Layout, Menu } from 'antd';
   import React, { useState } from 'react';
   import {useNavigate} from 'react-router-dom';
-  import MenuAside from './Etiquetas/MenuAside';
-  import NavMenu from './Etiquetas/NavMenu';
-  import PanelNita from './Etiquetas/PanelNita';
-  import TablaRoles from './Etiquetas/TablaRoles';
-  import NOLOG from './Etiquetas/NOLOG';
+  import MenuAside from '../Etiquetas/MenuAside';
+  import NavMenu from '../Etiquetas/NavMenu';
+  import PanelNita from '../Etiquetas/PanelNita';
+  import TablaRoles from '../Etiquetas/TablaRoles';
+  import NOLOG from '../Etiquetas/NOLOG';
   /*
   
   <RolesMenu key={'role'} />
