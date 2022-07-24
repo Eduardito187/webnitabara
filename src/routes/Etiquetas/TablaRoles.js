@@ -1,14 +1,11 @@
-import { Divider, Radio,Button, Table } from 'antd';
+import { Row, Col, Button, Radio, Table, Input, Divider } from 'antd';
 import {EditOutlined} from '@ant-design/icons';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {RolesAPI} from "./../../query/consultas";
+import {RolesAPI,IrUrlNitabara} from "./../../query/consultas";
 import React, { useState } from 'react';
 import Cargando from './Cargando';
 import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
-function editRANGO(a) {
-  window.location.href = a;
-}
 const columns = [
   {
     title: 'ID',
@@ -23,7 +20,7 @@ const columns = [
     title: 'Accion',
     dataIndex: 'ID',
     key: 'ID+Math.random()',
-    render: (text) => <Button icon={<EditOutlined />} onClick={()=>editRANGO("/Usuario/"+text)}>Editar</Button>
+    render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/Usuario/"+text)}>Editar</Button>
   }
 ];
 const rowSelection = {
@@ -54,6 +51,22 @@ const TablaRoles = (props) => {
   if (Data_Roles!=null) {
     return (
       <div>
+        <Row gutter={16}>
+          <Col span={6}>
+            <Button type="primary" onClick={()=>IrUrlNitabara("/RegistrarUsuario")}>
+              Agregar Rol
+            </Button>
+            <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
+              Eliminar
+            </Button>
+          </Col>
+          <Col span={12}>
+          </Col>
+          <Col span={6}>
+            <Input.Search allowClear style={{ width: '100%' }} defaultValue="" />
+          </Col>
+        </Row>
+        <Divider />
         <Table
           rowSelection={{
             type: "checkbox",

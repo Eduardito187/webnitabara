@@ -2,14 +2,10 @@ import {EditOutlined} from '@ant-design/icons';
 import { Row, Col, Button, Table, Input, Divider } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {UsuariosLista} from '../../query/consultas';
+import {UsuariosLista,IrUrlNitabara} from '../../query/consultas';
 import Cargando from "../../routes/Etiquetas/Cargando";
 import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
-
-function editUSER(a) {
-  window.location.href = a;
-}
 
 const columns = [
   {
@@ -58,7 +54,7 @@ const columns = [
     title: 'Accion',
     dataIndex: 'ID',
     key: 'ID+Math.random()',
-    render: (text) => <Button icon={<EditOutlined />} onClick={()=>editUSER("/Usuario/"+text)}>Editar</Button>
+    render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/Usuario/"+text)}>Editar</Button>
   }
 ];
 const rowSelection = {
@@ -76,9 +72,6 @@ const TablaUsuarios = () => {
   function validarAcciones() {
     getData();
   }
-  function IrUrl(a) {
-    window.location.href = a;
-  }
   const [getData, { loading, error, data }] = useLazyQuery(UsuariosLista);
 
   if (loading){
@@ -92,7 +85,7 @@ const TablaUsuarios = () => {
       <div>
         <Row gutter={16}>
           <Col span={6}>
-            <Button type="primary" onClick={()=>IrUrl("/RegistrarUsuario")} style={{backgroundColor:'#b7eb8f',borderColor:'#b7eb8f'}}>
+            <Button type="primary" onClick={()=>IrUrlNitabara("/RegistrarUsuario")}>
               Agregar Usuario
             </Button>
             <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>

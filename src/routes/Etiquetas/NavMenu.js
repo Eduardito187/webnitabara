@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './../../css/Validar.css';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Consulta_Cuenta} from '../../query/consultas';
-import {useNavigate} from 'react-router-dom';
+import {Consulta_Cuenta,IrUrlNitabara} from '../../query/consultas';
 import { Avatar, Dropdown, Menu,Layout } from 'antd';
 import { UserOutlined,MenuFoldOutlined,MenuUnfoldOutlined } from '@ant-design/icons';
 const { Header, Sider, Content } = Layout;
 var CryptoJS = require("crypto-js");
 
 function NavMenu(props) {
-    const navigate = useNavigate();
     function CerrarSession() {
       localStorage.removeItem('ID_USER');
-      navigate("/");
+      IrUrlNitabara("/");
     }
     const menu = (
         <Menu
