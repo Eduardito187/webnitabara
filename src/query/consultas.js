@@ -263,3 +263,12 @@ export const DeleteUsuario = gql `
     }
   }
 `;
+export const PermisosAll = gql `
+  query Permisos{
+    Permisos{
+      ID
+      Nombre
+      Codigo
+    }
+  }
+`;

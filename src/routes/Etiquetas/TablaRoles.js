@@ -53,7 +53,7 @@ const TablaRoles = (props) => {
       <div>
         <Row gutter={16}>
           <Col span={6}>
-            <Button type="primary" onClick={()=>IrUrlNitabara("/RegistrarUsuario")}>
+            <Button type="primary" onClick={()=>IrUrlNitabara("/RegistrarRol")}>
               Agregar Rol
             </Button>
             <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>
