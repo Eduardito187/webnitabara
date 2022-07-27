@@ -11,7 +11,7 @@ import {
 
 //Conexion con la api GRAPHQL
 const client = new ApolloClient({
-  uri: 'http://nitabara.grazcompany.com/',
+  uri: 'http://nitabara.grazcompany.com',
   cache: new InMemoryCache()
 });
 

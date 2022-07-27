@@ -17,11 +17,56 @@ export const Validar_LOG = gql `
     }
   }
 `;
+export const CrearNewRol = gql `
+  mutation CreateRol(
+    $Nombre: String!
+    $Permisos: [Int]!
+    ) {
+      CreateRol(
+      Nombre: $Nombre
+      Permisos: $Permisos
+      ) {
+      response
+    }
+  }
+`;
+export const UpdateContraUser = gql `
+  mutation UpdateContra(
+    $ID: Int!
+    $Contra: String!
+    ) {
+    UpdateContra(
+      ID: $ID
+      Contra: $Contra
+      ) {
+      response
+    }
+  }
+`;
+export const BloquearUserAPI = gql `
+  mutation Bloquear_Usuario(
+    $ID: Int!
+    $Estado: Boolean!) {
+      Bloquear_Usuario(
+        ID: $ID
+        Estado: $Estado) {
+      response
+    }
+  }
+`;
+export const GetStateUser = gql `
+  query Usuario($ID: Int!) {
+    Usuario(ID: $ID) {
+      ID
+      State
+    }
+  }`;
 export const Consulta_Cuenta = gql `
   query Usuario($ID: Int!) {
       Usuario(ID: $ID) {
       ID
       Usuario
+      State
       Persona {
         ID
         Nombre
@@ -163,6 +208,7 @@ export const EditarUsuarioAPI = gql `
     Usuario(ID: $ID) {
       ID
       Usuario
+      State
       Persona {
         ID
         Nombre

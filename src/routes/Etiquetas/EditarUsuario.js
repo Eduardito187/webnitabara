@@ -9,7 +9,7 @@ import moment from 'moment';
 import {NotificacionNitabara} from "./Notificar";
 const dateFormat = 'YYYY-MM-DD';
 const EditarUsuario = (props) => {
-    const load = React.useState(false);
+    const [Cuenta,SetCuenta] = React.useState(null);
     const [SetEditUser, { loading:Cargando_SetUser, error:Error_SetUser, data:Data_SetUser }] = useMutation(UpdateUsuario);
     const [DelEditUser, { loading:Cargando_DelUser, error:Error_DelUser, data:Data_DelUser }] = useMutation(DeleteUsuario);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
@@ -23,8 +23,17 @@ const EditarUsuario = (props) => {
         GetBarrios();
         GetTipoDoc();
         GetZonas();
-        GetUserAPI({ variables: {ID:parseInt(props.ID)}});
-    }, [load]);
+        GetUserAPI({ variables: {ID:parseInt(props.ID)}}).then(({ data }) => {
+            if (data.Usuario!=null) {
+                SetCuenta(data.Usuario);
+            }else{
+                SetCuenta("No Data");
+            }
+          })
+          .catch(e => {
+            NotificacionNitabara('Error','NITABARA','Error en API.');
+          });
+    },[]);
 
     function formatDate(date) {
         var d = new Date(date),
@@ -41,8 +50,21 @@ const EditarUsuario = (props) => {
     }
 
     function EliminarUser() {
-        DelEditUser({ variables: {ID:parseInt(props.ID)} });
-        NotificacionNitabara('info','NITABARA','Usuario eliminado.');
+        DelEditUser({ variables: {ID:parseInt(props.ID)} }).then(({ data }) => {
+            let x = false;
+            if (data.Eliminar_Usuario!=null) {
+                if (data.Eliminar_Usuario.response) {
+                    x = true;
+                    NotificacionNitabara('info','NITABARA','Usuario eliminado.');
+                }
+            }
+            if (x == false) {
+                NotificacionNitabara('Error','NITABARA','Error en API.');
+            }
+          })
+          .catch(e => {
+            NotificacionNitabara('Error','NITABARA','Error en API.');
+          });
     }
 
     const onFinish = (values) => {
@@ -52,7 +74,6 @@ const EditarUsuario = (props) => {
         }else{
             date_time = formatDate(values.nacimiento._d);
         }
-        console.log('Success:', values);
         SetEditUser({ variables: {
             ID:parseInt(props.ID),
             Email: values.Email,
@@ -69,8 +90,21 @@ const EditarUsuario = (props) => {
             usuario: values.usuario,
             zona: values.zona,
             nacimiento: date_time
-        } });
-        NotificacionNitabara('success','NITABARA','Usuario editado exitosamente.');
+        } }).then(({ data }) => {
+            let x = false;
+            if (data.Editar_Usuario!=null) {
+                if (data.Editar_Usuario.response) {
+                    x = true;
+                    NotificacionNitabara('success','NITABARA','Usuario editado exitosamente.');
+                }
+            }
+            if (x == false) {
+                NotificacionNitabara('Error','NITABARA','Error en API.');
+            }
+          })
+          .catch(e => {
+            NotificacionNitabara('Error','NITABARA','Error en API.');
+          });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -83,13 +117,9 @@ const EditarUsuario = (props) => {
     const onSearch = (value) => {
         console.log('search:', value);
     };
-    if (Cargando_User || Cargando_User == null){
-        return <Cargando />;
-    }
-    if (Error_User){
-      return <ErrorDB />
-    }
-    if (Data_User!=null) {
+    if (Cuenta=="No Data") {
+        return <ErrorNULL />;
+    }else if (Cuenta!=null) {
         return (
             <Form name="basic" labelCol={{span: 6}} wrapperCol={{span: 16}} style={{textAlign:'left'}} initialValues={{remember: true}} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off"
             initialValues={{
@@ -127,7 +157,7 @@ const EditarUsuario = (props) => {
                         {
                             Data_TipoDoc!=null
                             ? Data_TipoDoc.TipoDocumentos.map((d) => (
-                                <Select.Option value={d.ID}>{d.Nombre}</Select.Option>
+                                <Select.Option key={'Option_doc'+d.ID} value={d.ID}>{d.Nombre}</Select.Option>
                             ))
                             : null
                         }
@@ -141,7 +171,7 @@ const EditarUsuario = (props) => {
                         {
                             Data_Ciudades!=null
                             ? Data_Ciudades.Ciudades.map((d) => (
-                                <Select.Option value={d.ID}>{d.Nombre}</Select.Option>
+                                <Select.Option key={'Option_city'+d.ID} value={d.ID}>{d.Nombre}</Select.Option>
                             ))
                             : null
                         }
@@ -152,7 +182,7 @@ const EditarUsuario = (props) => {
                         {
                             Data_Zonas!=null
                             ? Data_Zonas.Zonas.map((d) => (
-                                <Select.Option value={d.ID}>{d.Nombre}</Select.Option>
+                                <Select.Option key={'Option_zona'+d.ID} value={d.ID}>{d.Nombre}</Select.Option>
                             ))
                             : null
                         }
@@ -163,7 +193,7 @@ const EditarUsuario = (props) => {
                         {
                             Data_Barrios!=null
                             ? Data_Barrios.Barrios.map((d) => (
-                                <Select.Option value={d.ID}>{d.Nombre}</Select.Option>
+                                <Select.Option key={'Option_barrio'+d.ID} value={d.ID}>{d.Nombre}</Select.Option>
                             ))
                             : null
                         }
@@ -191,7 +221,7 @@ const EditarUsuario = (props) => {
             </Form>
         );
     }else{
-        return <ErrorNULL />;
+        return <Cargando />;
     }
 };
 

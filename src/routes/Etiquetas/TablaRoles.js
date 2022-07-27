@@ -35,12 +35,11 @@ const rowSelection = {
 };
 
 const TablaRoles = (props) => {
-  const load = React.useState(false);
   const [GetRolesAPI, { loading:Cargando_Roles, error:Error_Roles, data:Data_Roles }] = useLazyQuery(RolesAPI);
 
   React.useEffect(() => {
     GetRolesAPI();
-  }, [load]);
+  }, []);
 
   if (Cargando_Roles || Cargando_Roles == null){
     return <Cargando />;

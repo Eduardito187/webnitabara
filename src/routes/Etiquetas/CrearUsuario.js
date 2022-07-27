@@ -5,7 +5,6 @@ import {Ciudades,Zonas,Barrios,TiposDocumentos,NuevoUsuario} from "./../../query
 import {NotificacionNitabara} from "./Notificar";
 
 const CrearUsuario = () => {
-    const load = React.useState(false);
     const [form] = Form.useForm();
     const [SetUser, { loading:Cargando_User, error:Error_User, data:Data_User }] = useMutation(NuevoUsuario);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
@@ -18,7 +17,7 @@ const CrearUsuario = () => {
         GetBarrios();
         GetTipoDoc();
         GetZonas();
-    }, [load]);
+    }, []);
 
     function formatDate(date) {
         var d = new Date(date),
