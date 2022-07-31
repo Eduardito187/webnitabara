@@ -30,6 +30,21 @@ export const CrearNewRol = gql `
     }
   }
 `;
+export const EditarRolAPI = gql `
+  mutation EditRolesUsers(
+    $ID: Int!
+    $Nombre: String!
+    $Permisos: [Int]!
+    ) {
+      EditRolesUsers(
+        ID: $ID
+        Nombre: $Nombre
+        Permisos: $Permisos
+      ) {
+      response
+    }
+  }
+`;
 export const UpdateContraUser = gql `
   mutation UpdateContra(
     $ID: Int!
@@ -315,6 +330,22 @@ export const PermisosAll = gql `
       ID
       Nombre
       Codigo
+    }
+  }
+`;
+export const GetRolID = gql `
+  query Rol($ID: Int!) {
+    Rol(ID: $ID) {
+      ID
+      Rol
+      RolPermiso {
+        ID
+        Permiso {
+          ID
+          Nombre
+          Codigo
+        }
+      }
     }
   }
 `;
