@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import './../../css/Validar.css';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Consulta_Cuenta,IrUrlNitabara} from '../../query/consultas';
+import {MiName,IrUrlNitabara} from '../../query/consultas';
 import { Avatar, Dropdown, Menu,Layout } from 'antd';
 import { UserOutlined,MenuFoldOutlined,MenuUnfoldOutlined } from '@ant-design/icons';
 const { Header, Sider, Content } = Layout;
 var CryptoJS = require("crypto-js");
 
 function NavMenu(props) {
+    const [collapsed, setCollapsed] = useState(false);
+    const [UserName,SetUserName] = useState(null);
+    const [GetName, { loading:Cargando_Name, error:Error_Name, data:Data_Name }] = useLazyQuery(MiName, {
+        variables:{
+            ID: parseInt(localStorage.ID_USER)
+        },
+        fetchPolicy: 'no-cache',
+        onCompleted: result => {
+            SetUserName(result);
+        },
+    });
+    useEffect(() => {
+        GetName();
+    }, []);
     function CerrarSession() {
       localStorage.removeItem('ID_USER');
       IrUrlNitabara("/");
@@ -50,10 +64,14 @@ function NavMenu(props) {
                     onClick: () => props.setCollapsed(!props.collapsed),
                 })}
             </div>
-            <div style={{width:'300px',fontWeight:'bold',color:'purple',fontSize:'20px',position:'absolute',zIndex:100,right:'0px'}}>
+            <div style={{width:'400px',fontWeight:'bold',color:'purple',fontSize:'20px',position:'absolute',zIndex:100,right:'0px'}}>
                 <Dropdown overlay={menu} placement="bottomRight">
                     <span class="pointer">
-                    <Avatar size="large" icon={<UserOutlined />} /><b class="pointer"> Oliver Mauricio Oliva</b>
+                    <Avatar size="large" icon={<UserOutlined />} /><b class="pointer"> {
+                        UserName != null
+                        ? <b>{UserName.Usuario.Persona.Nombre+" "+UserName.Usuario.Persona.Paterno+" "+UserName.Usuario.Persona.Materno}</b>
+                        : null
+                    }</b>
                     </span>
                 </Dropdown>
             </div>

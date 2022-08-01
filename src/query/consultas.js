@@ -30,6 +30,17 @@ export const CrearNewRol = gql `
     }
   }
 `;
+export const MiName =gql`
+query Usuario($ID:Int!){
+  Usuario(ID:$ID) {
+    Persona {
+      Nombre
+      Paterno
+      Materno
+    }
+  }
+}
+`;
 export const AsignadoDeRoles = gql `
   mutation AsignadoDeRoles(
     $ID: Int!

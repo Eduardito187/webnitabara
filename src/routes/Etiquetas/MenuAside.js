@@ -19,7 +19,7 @@ function MenuAside(props) {
     return(
         <Sider theme="light" trigger={null} collapsible collapsed={props.collapsed} style={{height:'100vh'}}>
             <div className="logo" style={{width:'100%',height:'auto',paddingTop:'25px',paddingBottom:'25px'}}>
-                <img src="./dist/logo.png" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
+                <img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t1.6435-9/78754959_111776756968296_5360999924286619648_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=973b4a&_nc_ohc=su3qdpaJ-KEAX-TM_Uj&_nc_ht=scontent.fsrz1-2.fna&oh=00_AT_hP1sbSGKNZp_Mg2YZYme47-YNHteALLcFgmJI09lNPQ&oe=630D8A9B" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
                 <RolesMenu />
             </div>
             <Menu>

@@ -16,7 +16,7 @@ const RegistrarRol: React.FC = () => {
         onCompleted: result => {
             getMock(result);
         },
-      });
+    });
     const [NewRolAPI, { loading:Cargando_ROL, error:Error_ROL, data:Data_ROL }] = useMutation(CrearNewRol);
     const [mockData, setMockData] = React.useState([]);
     const [targetKeys, setTargetKeys] = React.useState([]);
