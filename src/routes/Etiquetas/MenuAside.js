@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './../../css/Validar.css';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {Consulta_Cuenta,IrUrlNitabara} from '../../query/consultas';
+import RolesMenu from './RolesMenu';
 import {useNavigate} from 'react-router-dom';
 import { Button, Dropdown, Menu,Layout } from 'antd';
 import { SecurityScanOutlined, UserOutlined, DashboardOutlined } from '@ant-design/icons';
@@ -19,6 +20,7 @@ function MenuAside(props) {
         <Sider theme="light" trigger={null} collapsible collapsed={props.collapsed} style={{height:'100vh'}}>
             <div className="logo" style={{width:'100%',height:'auto',paddingTop:'25px',paddingBottom:'25px'}}>
                 <img src="./dist/logo.png" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
+                <RolesMenu />
             </div>
             <Menu>
                 <Menu.Item key={'PANEL_NITA'} onClick={()=>IrUrlNitabara("/Inicio")}>

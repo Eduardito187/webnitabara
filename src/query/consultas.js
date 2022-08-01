@@ -30,6 +30,19 @@ export const CrearNewRol = gql `
     }
   }
 `;
+export const AsignadoDeRoles = gql `
+  mutation AsignadoDeRoles(
+    $ID: Int!
+    $Roles: [Int]!
+    ) {
+      AsignadoDeRoles(
+      ID: $ID
+      Roles: $Roles
+      ) {
+      response
+    }
+  }
+`;
 export const EditarRolAPI = gql `
   mutation EditRolesUsers(
     $ID: Int!
@@ -273,6 +286,28 @@ export const RolesAPI = gql `
       }
     }
   }
+`;
+export const SoloRoles = gql`
+query Roles{
+  Roles {
+    ID
+    Rol
+  }
+}
+`;
+export const RolesUsers = gql`
+query Usuario($ID: Int!){
+  Usuario(ID:$ID) {
+    ID
+    Roles {
+      ID
+      Rol {
+        ID
+        Rol
+      }
+    }
+  }
+}
 `;
 export const UpdateUsuario = gql `
   mutation Editar_Usuario(

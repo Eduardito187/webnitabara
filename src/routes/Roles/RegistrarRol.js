@@ -1,4 +1,3 @@
-import {MenuFoldOutlined} from '@ant-design/icons';
 import { Button, Input, Avatar,Layout, Form, Transfer, Row, Col } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';

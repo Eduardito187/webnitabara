@@ -4,15 +4,11 @@ import MenuAside from '../Etiquetas/MenuAside';
 import NavMenu from '../Etiquetas/NavMenu';
 import NOLOG from '../Etiquetas/NOLOG';
 import { useParams } from 'react-router';
-import EditarUsuario from '../Etiquetas/EditarUsuario';
-import UpdatePWD from '../Etiquetas/UpdatePWD';
-import DesactivarCuenta from "./../Etiquetas/DesactivarCuenta";
-import SelectRoles from '../Etiquetas/SelectRoles';
+import EditarPerfil from '../Etiquetas/EditarPerfil';
 const { Header, Sider, Content } = Layout;
   
-const Usuario: React.FC = (props) => {
+const MiPerfil: React.FC = (props) => {
     const [collapsed, setCollapsed] = useState(false);
-    const { ID } = useParams();
     if (localStorage.ID_USER==null) {
       return <NOLOG />;
     }else{
@@ -23,23 +19,10 @@ const Usuario: React.FC = (props) => {
                 <NavMenu setCollapsed={setCollapsed} collapsed={collapsed} />
                 <Content className="site-layout-background" style={{margin: '24px 16px',padding: 24,}}>
                     <Row>
-                      <Col span={12}>
+                      <Col span={24}>
                           <div style={{padding:'5px'}}>
-                              <EditarUsuario ID={ID} />
+                              <EditarPerfil ID={localStorage.ID_USER} />
                           </div>
-                      </Col>
-                      <Col span={12}>
-                        <Row>
-                          <Col span={12} style={{padding:'5px'}}>
-                            <DesactivarCuenta ID={ID} />
-                          </Col>
-                          <Col span={12} style={{padding:'5px'}}>
-                            <UpdatePWD ID={ID} />
-                          </Col>
-                          <Col span={24} style={{padding:'5px'}}>
-                            <SelectRoles ID={ID} />
-                          </Col>
-                        </Row>
                       </Col>
                     </Row>
                 </Content>
@@ -48,5 +31,5 @@ const Usuario: React.FC = (props) => {
       );
     }
 };
-export default Usuario;
+export default MiPerfil;
   

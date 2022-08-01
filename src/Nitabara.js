@@ -12,6 +12,7 @@ const Roles = lazy(() => import('./routes/Roles/Roles'));
 const RegistrarRol = lazy(() => import('./routes/Roles/RegistrarRol'));
 const EditarRol = lazy(() => import('./routes/Roles/EditarRol'));
 const Error404 = lazy(() => import('./routes/404/Error404'));
+const MiPerfil = lazy(() => import('./routes/Usuarios/MiPerfil'));
 
 const Nitabara = (props) => (
   <Router>
@@ -26,6 +27,7 @@ const Nitabara = (props) => (
         <Route path="/Roles" element={<Roles />} />
         <Route path="/RegistrarRol" element={<RegistrarRol />} />
         <Route path="/EditarRol/:ID" element={<EditarRol />} />
+        <Route path="/MiPerfil" element={<MiPerfil />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>

@@ -18,7 +18,7 @@ function NavMenu(props) {
             {
                 key: '1',
                 label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                <a rel="noopener noreferrer" href="/MiPerfil">
                     Mi Perfil
                 </a>
                 ),

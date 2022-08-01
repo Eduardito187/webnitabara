@@ -1,51 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import './../../css/Validar.css';
+import * as React from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Consulta_Cuenta_Roles} from '../../query/consultas';
+import {Consulta_Cuenta_Roles,GetStateUser} from "../../query/consultas";
+import './../../css/Validar.css';
+import Cargando from './Cargando';
+import ErrorNULL from './ErrorNULL';
+import { DownOutlined } from '@ant-design/icons';
 import {useNavigate} from 'react-router-dom';
-import { Menu,Spin } from 'antd';
-function RolesMenu() {
-    function validarAcciones() {
-        getData({ variables: { ID:parseInt(localStorage.ID_USER) } });
-    }
-    //navegacion
-    const navigate = useNavigate();
-    const [getData, { loading, error, data }] = useLazyQuery(Consulta_Cuenta_Roles);
-    if (loading){
-        return(
-            <Spin />
-        );
-      }
-      if (error){
-        return(
-          <div className="cuerpoERROR">
-            <div className="vertical-center">
-              <div className="cuadro">
-                <h1>ERROR</h1>
-              </div>
-            </div>
-          </div>
-        );
-      }
-      if (data!=null) {
-        if (data.Usuario!=null) {
-            return(
-                <Menu theme="light" mode="inline" style={{height:'100vh'}}>
-                    {
-                        data.Usuario.Roles.map((j) => (
-                            <Menu.Item>{j.Rol.Rol}</Menu.Item>
-                        ))
-                    }
-                </Menu>
-            );
+import { Menu,Dropdown,Space,Row,Col } from 'antd';
+import {NotificacionNitabara} from "./Notificar";
+const RolesMenu = (props) => {
+    const [UsuarioData,SetUsuarioData] = React.useState(null);
+    const [RolesComponent,SetRolesComponent] = React.useState([]);
+    const [RolSelectActual,SetRolSelectActual] = React.useState("");
+    const [getData, { loading, error, data }] = useLazyQuery(Consulta_Cuenta_Roles, {
+      variables:{
+        ID:parseInt(localStorage.ID_USER)
+      },
+      fetchPolicy: 'no-cache',
+      onCompleted: result => {
+        if (result.Usuario!=null) {
+          SetUsuarioData(result.Usuario);
+          ArmadoMenuRoles(result.Usuario.Roles);
         }else{
-            return (<div><h1>Sin DATA</h1></div>);
+          SetUsuarioData("No Data");
         }
-      }else{
-          validarAcciones();
-          return(
-                <Spin />
-          );
-      }
-}
+      },
+    });
+
+    React.useEffect(() => {
+      getData();
+    },[]);
+  function ArmadoMenuRoles(obj) {
+    let x = [];
+    for (let index = 0; index < obj.length; index++) {
+      x.push({
+        label: (
+          <b onClick={()=>SetRolSelectActual(obj[index]["Rol"]["Rol"])}>
+          {obj[index]["Rol"]["Rol"]}
+          </b>
+          ),
+        key: obj[index]["Rol"]["ID"]+"_ID_ROL",
+      });
+    }
+    if (localStorage.ID_ROL_ACTUAL==null) {
+      localStorage.ID_ROL_ACTUAL=obj[0]["Rol"]["ID"];
+      localStorage.NAME_ROL_ACTUAL=obj[0]["Rol"]["Rol"];
+    }
+    SetRolSelectActual(localStorage.NAME_ROL_ACTUAL);
+    SetRolesComponent(x);
+  }
+    if (UsuarioData=="No Data") {
+        return <ErrorNULL />;
+    }else if (UsuarioData!=null) {
+        return (
+          <Row>
+            <Col span={24}>
+                <Dropdown overlay={<Menu items={RolesComponent} />} trigger={['click']}>
+                  <b onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      {RolSelectActual}
+                      <DownOutlined />
+                    </Space>
+                  </b>
+                </Dropdown>
+            </Col>
+          </Row>
+        );
+    }else{
+      return <Cargando />;
+    }
+};
+
 export default RolesMenu;
