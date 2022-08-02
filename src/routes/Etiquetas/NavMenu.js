@@ -24,6 +24,8 @@ function NavMenu(props) {
     }, []);
     function CerrarSession() {
       localStorage.removeItem('ID_USER');
+      localStorage.removeItem('ID_ROL_ACTUAL');
+      localStorage.removeItem('NAME_ROL_ACTUAL');
       IrUrlNitabara("/");
     }
     const menu = (
