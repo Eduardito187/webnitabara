@@ -14,6 +14,10 @@ const EditarRol = lazy(() => import('./routes/Roles/EditarRol'));
 const Error404 = lazy(() => import('./routes/404/Error404'));
 const MiPerfil = lazy(() => import('./routes/Usuarios/MiPerfil'));
 
+const Laboratorios = lazy(() => import('./routes/Laboratorios/Laboratorios.tsx'));
+const Consultas = lazy(() => import('./routes/Consultas/Consultas.tsx'));
+const Cirugias = lazy(() => import('./routes/Cirugias/Cirugias.tsx'));
+
 const Nitabara = (props) => (
   <Router>
     <Suspense fallback={<Cargando />}>
@@ -28,6 +32,9 @@ const Nitabara = (props) => (
         <Route path="/RegistrarRol" element={<RegistrarRol />} />
         <Route path="/EditarRol/:ID" element={<EditarRol />} />
         <Route path="/MiPerfil" element={<MiPerfil />} />
+        <Route path="/Laboratorios" element={<Laboratorios />} />
+        <Route path="/Consultas" element={<Consultas />} />
+        <Route path="/Cirugias" element={<Cirugias />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>

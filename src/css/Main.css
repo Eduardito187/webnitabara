@@ -41,3 +41,8 @@ html,
         font-size: 30px;
     }
 }
+
+.SeparacionVertical{
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}

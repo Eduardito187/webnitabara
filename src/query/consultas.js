@@ -395,3 +395,167 @@ export const GetRolID = gql `
     }
   }
 `;
+export const Consultas = gql`
+query Consultas{
+  Consultas {
+    ID
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Descripcion
+      Total
+    }
+    Descripcion
+    Hora
+  }
+}
+`;
+export const Consulta = gql`
+query Consulta($ID: Int!){
+  Consulta(ID:$ID) {
+    ID
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Descripcion
+      Total
+    }
+    Descripcion
+    Hora
+  }
+}
+`;
+export const Cirugias = gql`
+query Cirugias{
+  Cirugias {
+    ID
+    Descripcion
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Total
+    }
+  }
+}
+`;
+export const Cirugia = gql`
+query Cirugia($ID: Int!){
+  Cirugia(ID:$ID) {
+    ID
+    Descripcion
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Total
+    }
+  }
+}
+`;

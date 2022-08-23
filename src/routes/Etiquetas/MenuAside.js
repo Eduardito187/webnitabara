@@ -32,6 +32,15 @@ function MenuAside(props) {
                 <Menu.Item key={'Roles'} onClick={()=>IrUrlNitabara("/Roles")}>
                     <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Roles')}</b>
                 </Menu.Item>
+                <Menu.Item key={'Cirugias'} onClick={()=>IrUrlNitabara("/Cirugias")}>
+                    <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Cirugias')}</b>
+                </Menu.Item>
+                <Menu.Item key={'Consultas'} onClick={()=>IrUrlNitabara("/Consultas")}>
+                    <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Consultas')}</b>
+                </Menu.Item>
+                <Menu.Item key={'Laboratorios'} onClick={()=>IrUrlNitabara("/Laboratorios")}>
+                    <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Laboratorios')}</b>
+                </Menu.Item>
             </Menu>
         </Sider>
     );
