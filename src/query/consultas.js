@@ -17,6 +17,47 @@ export const Validar_LOG = gql `
     }
   }
 `;
+export const GetEspecialidad = gql `
+query Especialidades($ID:Int!){
+    Especialidades(ID:$ID) {
+      ID
+      Nombre
+    }
+  }
+`;
+export const GetPersonasSelect = gql `
+query Personas{
+  Personas {
+    ID
+    Nombre
+    Paterno
+    Materno
+    CI
+  }
+}
+`;
+export const GetMedicosSelect = gql `
+query Medicos{
+  Medicos {
+    ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+    }
+  }
+}
+`;
+export const GetEspecialidades = gql `
+query Especialidades{
+    Especialidades {
+      ID
+      Nombre
+    }
+  }
+`;
 export const CrearNewRol = gql `
   mutation CreateRol(
     $Nombre: String!

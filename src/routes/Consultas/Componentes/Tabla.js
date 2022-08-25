@@ -3,7 +3,7 @@ import { Row, Col, Button, Table, Input, Divider, Tag } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {IrUrlNitabara, Consultas} from './../../../query/consultas';
-import Cargando from "./../../Etiquetas/Cargando";
+import Cargando from "../../Etiquetas/Cargando";
 import ErrorDB from './../../Etiquetas/ErrorDB';
 import ErrorNULL from './../../Etiquetas/ErrorNULL';
 
@@ -79,7 +79,7 @@ const Tabla = () => {
       <div>
         <Row gutter={16}>
           <Col span={6}>
-            <Button type="primary" onClick={()=>IrUrlNitabara("/RegistrarUsuario")}>
+            <Button type="primary" onClick={()=>IrUrlNitabara("/NuevaConsulta")}>
               Registrar Consulta
             </Button>
             <Button type="primary" style={{backgroundColor:'red',borderColor:'red',marginLeft:'10px'}}>

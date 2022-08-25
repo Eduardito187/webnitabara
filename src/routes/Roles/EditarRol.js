@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {PermisosAll,EditarRolAPI,GetRolID} from './../../query/consultas';
 import MenuAside from '../Etiquetas/MenuAside';
 import NavMenu from '../Etiquetas/NavMenu';
-import Cargando from './../Etiquetas/Cargando';
+import Cargando from '../Etiquetas/Cargando';
 import NOLOG from '../Etiquetas/NOLOG';
 import { useParams } from 'react-router';
 import {NotificacionNitabara} from "./../Etiquetas/Notificar";

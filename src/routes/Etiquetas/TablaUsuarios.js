@@ -3,7 +3,7 @@ import { Row, Col, Button, Table, Input, Divider } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {UsuariosLista,IrUrlNitabara} from '../../query/consultas';
-import Cargando from "../../routes/Etiquetas/Cargando";
+import Cargando from "./Cargando";
 import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
 

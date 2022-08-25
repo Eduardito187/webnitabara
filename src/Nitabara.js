@@ -13,10 +13,14 @@ const RegistrarRol = lazy(() => import('./routes/Roles/RegistrarRol'));
 const EditarRol = lazy(() => import('./routes/Roles/EditarRol'));
 const Error404 = lazy(() => import('./routes/404/Error404'));
 const MiPerfil = lazy(() => import('./routes/Usuarios/MiPerfil'));
+const NuevaCirugia = lazy(() => import('./routes/Cirugias/NuevaCirugia'));
+const NuevaConsulta = lazy(() => import('./routes/Consultas/NuevaConsulta'));
+const Laboratorios = lazy(() => import('./routes/Laboratorios/Laboratorios'));
+const Consultas = lazy(() => import('./routes/Consultas/Consultas'));
+const Cirugias = lazy(() => import('./routes/Cirugias/Cirugias'));
 
-const Laboratorios = lazy(() => import('./routes/Laboratorios/Laboratorios.tsx'));
-const Consultas = lazy(() => import('./routes/Consultas/Consultas.tsx'));
-const Cirugias = lazy(() => import('./routes/Cirugias/Cirugias.tsx'));
+const Clientes = lazy(() => import('./routes/Clientes/Clientes'));
+const NuevoCliente = lazy(() => import('./routes/Clientes/NuevoCliente'));
 
 const Nitabara = (props) => (
   <Router>
@@ -35,6 +39,10 @@ const Nitabara = (props) => (
         <Route path="/Laboratorios" element={<Laboratorios />} />
         <Route path="/Consultas" element={<Consultas />} />
         <Route path="/Cirugias" element={<Cirugias />} />
+        <Route path="/NuevaCirugia" element={<NuevaCirugia />} />
+        <Route path="/NuevaConsulta" element={<NuevaConsulta />} />
+        <Route path="/Clientes" element={<Clientes />} />
+        <Route path="/NuevoCliente" element={<NuevoCliente />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>

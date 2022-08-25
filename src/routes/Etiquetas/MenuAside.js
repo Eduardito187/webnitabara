@@ -41,6 +41,9 @@ function MenuAside(props) {
                 <Menu.Item key={'Laboratorios'} onClick={()=>IrUrlNitabara("/Laboratorios")}>
                     <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Laboratorios')}</b>
                 </Menu.Item>
+                <Menu.Item key={'Laboratorios'} onClick={()=>IrUrlNitabara("/Clientes")}>
+                    <UserOutlined size={"small"} /> <b>{retornarTEXTO('Clientes')}</b>
+                </Menu.Item>
             </Menu>
         </Sider>
     );
