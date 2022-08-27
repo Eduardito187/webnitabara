@@ -15,10 +15,13 @@ const Error404 = lazy(() => import('./routes/404/Error404'));
 const MiPerfil = lazy(() => import('./routes/Usuarios/MiPerfil'));
 const NuevaCirugia = lazy(() => import('./routes/Cirugias/NuevaCirugia'));
 const NuevaConsulta = lazy(() => import('./routes/Consultas/NuevaConsulta'));
+const NuevoExamen = lazy(() => import('./routes/Laboratorios/NuevoExamen'));
+const EditarCirugia = lazy(() => import('./routes/Cirugias/EditarCirugia'));
+const EditarConsulta = lazy(() => import('./routes/Consultas/EditarConsulta'));
+const EditarLaboratorio = lazy(() => import('./routes/Laboratorios/EditarLaboratorio'));
 const Laboratorios = lazy(() => import('./routes/Laboratorios/Laboratorios'));
 const Consultas = lazy(() => import('./routes/Consultas/Consultas'));
 const Cirugias = lazy(() => import('./routes/Cirugias/Cirugias'));
-
 const Clientes = lazy(() => import('./routes/Clientes/Clientes'));
 const NuevoCliente = lazy(() => import('./routes/Clientes/NuevoCliente'));
 
@@ -40,7 +43,11 @@ const Nitabara = (props) => (
         <Route path="/Consultas" element={<Consultas />} />
         <Route path="/Cirugias" element={<Cirugias />} />
         <Route path="/NuevaCirugia" element={<NuevaCirugia />} />
+        <Route path="/EditarCirugia/:ID" element={<EditarCirugia />} />
         <Route path="/NuevaConsulta" element={<NuevaConsulta />} />
+        <Route path="/EditarConsulta/:ID" element={<EditarConsulta />} />
+        <Route path="/NuevoExamen" element={<NuevoExamen />} />
+        <Route path="/EditarLaboratorio/:ID" element={<EditarLaboratorio />} />
         <Route path="/Clientes" element={<Clientes />} />
         <Route path="/NuevoCliente" element={<NuevoCliente />} />
         <Route path="/404" element={<Error404 />} />

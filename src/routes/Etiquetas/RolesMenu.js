@@ -49,6 +49,13 @@ const RolesMenu = (props) => {
     SetRolSelectActual(localStorage.NAME_ROL_ACTUAL);
     SetRolesComponent(x);
   }
+  function retornarTEXTO(a) {
+    if (props.collapsed) {
+      return "Roles";
+    }else{
+      return a;
+    }
+  }
     if (UsuarioData=="No Data") {
         return <ErrorNULL />;
     }else if (UsuarioData!=null) {
@@ -58,7 +65,7 @@ const RolesMenu = (props) => {
                 <Dropdown overlay={<Menu items={RolesComponent} />} trigger={['click']}>
                   <b onClick={(e) => e.preventDefault()}>
                     <Space>
-                      {RolSelectActual}
+                      {retornarTEXTO(RolSelectActual)}
                       <DownOutlined />
                     </Space>
                   </b>

@@ -20,7 +20,7 @@ function MenuAside(props) {
         <Sider theme="light" trigger={null} collapsible collapsed={props.collapsed} style={{height:'100vh'}}>
             <div className="logo" style={{width:'100%',height:'auto',paddingTop:'25px',paddingBottom:'25px'}}>
                 <img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t1.6435-9/78754959_111776756968296_5360999924286619648_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=973b4a&_nc_ohc=su3qdpaJ-KEAX-TM_Uj&_nc_ht=scontent.fsrz1-2.fna&oh=00_AT_hP1sbSGKNZp_Mg2YZYme47-YNHteALLcFgmJI09lNPQ&oe=630D8A9B" style={{width:'80px',height:'80px',borderRadius:'40px'}} alt="" />
-                <RolesMenu />
+                <RolesMenu collapsed={props.collapsed} />
             </div>
             <Menu>
                 <Menu.Item key={'PANEL_NITA'} onClick={()=>IrUrlNitabara("/Inicio")}>
@@ -41,7 +41,7 @@ function MenuAside(props) {
                 <Menu.Item key={'Laboratorios'} onClick={()=>IrUrlNitabara("/Laboratorios")}>
                     <SecurityScanOutlined size={"small"} /> <b>{retornarTEXTO('Laboratorios')}</b>
                 </Menu.Item>
-                <Menu.Item key={'Laboratorios'} onClick={()=>IrUrlNitabara("/Clientes")}>
+                <Menu.Item key={'Clientes'} onClick={()=>IrUrlNitabara("/Clientes")}>
                     <UserOutlined size={"small"} /> <b>{retornarTEXTO('Clientes')}</b>
                 </Menu.Item>
             </Menu>

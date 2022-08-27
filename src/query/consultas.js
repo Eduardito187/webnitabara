@@ -17,6 +17,96 @@ export const Validar_LOG = gql `
     }
   }
 `;
+export const GetExamenes = gql `
+query Examenes{
+  Examenes {
+    ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Total
+    }
+    Descripcion
+  }
+}
+`;
+export const GetExamen = gql `
+query Examen($ID:Int!){
+  Examen(ID:$ID) {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Medico {
+        ID
+        Persona {
+          ID
+          Nombre
+          Paterno
+          Materno
+          CI
+          Correo
+          Telefono
+          Nacimiento
+        }
+        Especialidad {
+          ID
+          Nombre
+          Descripcion
+        }
+        Usuario {
+          ID
+          Usuario
+          State
+        }
+      }
+      Pago {
+        ID
+        Total
+      }
+      Descripcion
+    }
+  }
+`;
 export const GetEspecialidad = gql `
 query Especialidades($ID:Int!){
     Especialidades(ID:$ID) {

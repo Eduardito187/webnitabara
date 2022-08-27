@@ -48,7 +48,7 @@ const columns = [
     title: 'Accion',
     dataIndex: 'ID',
     key: 'ID+Math.random()',
-    render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/Cirugia/"+text)}>Editar</Button>
+    render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/EditarCirugia/"+text)}>Editar</Button>
   }
 ];
 const rowSelection = {
