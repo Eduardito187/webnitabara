@@ -1,11 +1,12 @@
 import {EditOutlined} from '@ant-design/icons';
-import { Row, Col, Button, Table, Input, Divider, Tag } from 'antd';
+import { Row, Col, Button, Table, Input, Divider, Tag, Select } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {IrUrlNitabara, Consultas} from './../../../query/consultas';
 import Cargando from "../../Etiquetas/Cargando";
 import ErrorDB from './../../Etiquetas/ErrorDB';
 import ErrorNULL from './../../Etiquetas/ErrorNULL';
+const { Option } = Select;
 
 const columns = [
   {
@@ -37,6 +38,10 @@ const Tabla = () => {
     getData();
   }
   const [getData, { loading, error, data }] = useLazyQuery(Consultas);
+  const [Filtro,SetFiltro] = React.useState("");
+  const onChange = (value) => {
+    SetFiltro(value);
+  };
 
   if (loading){
     return <Cargando />;

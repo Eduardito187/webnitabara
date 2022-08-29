@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {Ciudades,Zonas,Barrios,TiposDocumentos,NuevoUsuario} from "./../../query/consultas";
 import {NotificacionNitabara} from "./Notificar";
+import { GetDateToMomment } from '../../helpers/GetDate';
 
 const CrearUsuario = () => {
     const [form] = Form.useForm();
@@ -19,27 +20,7 @@ const CrearUsuario = () => {
         GetZonas();
     }, []);
 
-    function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-        if (month.length < 2) 
-            month = '0' + month;
-        if (day.length < 2) 
-            day = '0' + day;
-    
-        return [year, month, day].join('-');
-    }
-
     const onFinish = (values) => {
-        let date_time = "";
-        if (values.nacimiento._i!=null) {
-            date_time = values.nacimiento._i;
-        }else{
-            date_time = formatDate(values.nacimiento._d);
-        }
         SetUser({ variables: {
             Email: values.Email,
             Telefono: values.Telefono,
@@ -55,7 +36,7 @@ const CrearUsuario = () => {
             nombre: values.nombre,
             usuario: values.usuario,
             zona: values.zona,
-            nacimiento: date_time
+            nacimiento: GetDateToMomment(values.nacimiento)
         } });
         console.log('Success:', values);
         form.resetFields();

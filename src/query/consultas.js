@@ -530,6 +530,16 @@ export const Consultas = gql`
 query Consultas{
   Consultas {
     ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
     Medico {
       ID
       Persona {
@@ -567,6 +577,16 @@ export const Consulta = gql`
 query Consulta($ID: Int!){
   Consulta(ID:$ID) {
     ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
     Medico {
       ID
       Persona {
@@ -689,4 +709,65 @@ query Cirugia($ID: Int!){
     }
   }
 }
+`;
+export const CreateCirugia = gql `
+  mutation CreateCirugia(
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Hora: String!
+    $Precio: Float!
+  ) {
+    CreateCirugia(
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Hora: $Hora
+      Precio: $Precio
+    ){
+      response
+    }
+  }
+`;
+export const CreateConsulta = gql `
+  mutation CreateConsulta(
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Hora: String!
+    $Precio: Float!
+  ) {
+    CreateConsulta(
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Hora: $Hora
+      Precio: $Precio
+    ){
+      response
+    }
+  }
+`;
+export const CreateExamen = gql `
+  mutation CreateExamen(
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Precio: Float!
+  ) {
+    CreateExamen(
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Precio: $Precio
+    ){
+      response
+    }
+  }
 `;

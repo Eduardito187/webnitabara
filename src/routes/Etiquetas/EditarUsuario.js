@@ -7,6 +7,7 @@ import ErrorDB from './ErrorDB';
 import ErrorNULL from './ErrorNULL';
 import moment from 'moment';
 import {NotificacionNitabara} from "./Notificar";
+import { GetDateToMomment } from '../../helpers/GetDate';
 const dateFormat = 'YYYY-MM-DD';
 const EditarUsuario = (props) => {
     const [Cuenta,SetCuenta] = React.useState(null);
@@ -35,20 +36,6 @@ const EditarUsuario = (props) => {
           });
     },[]);
 
-    function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-    
-        if (month.length < 2) 
-            month = '0' + month;
-        if (day.length < 2) 
-            day = '0' + day;
-    
-        return [year, month, day].join('-');
-    }
-
     function EliminarUser() {
         DelEditUser({ variables: {ID:parseInt(props.ID)} }).then(({ data }) => {
             let x = false;
@@ -68,12 +55,6 @@ const EditarUsuario = (props) => {
     }
 
     const onFinish = (values) => {
-        let date_time = "";
-        if (values.nacimiento._i!=null) {
-            date_time = values.nacimiento._i;
-        }else{
-            date_time = formatDate(values.nacimiento._d);
-        }
         SetEditUser({ variables: {
             ID:parseInt(props.ID),
             Email: values.Email,
@@ -89,7 +70,7 @@ const EditarUsuario = (props) => {
             nombre: values.nombre,
             usuario: values.usuario,
             zona: values.zona,
-            nacimiento: date_time
+            nacimiento: GetDateToMomment(values.nacimiento)
         } }).then(({ data }) => {
             let x = false;
             if (data.Editar_Usuario!=null) {

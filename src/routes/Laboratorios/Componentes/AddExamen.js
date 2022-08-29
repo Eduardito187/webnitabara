@@ -4,7 +4,9 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import NuevoCliente from '../../Clientes/Componentes/NuevoCliente';
 import NuevoMedico from '../../Medicos/Componentes/NuevoMedico';
-import {GetPersonasSelect,GetMedicosSelect} from './../../../query/consultas';
+import {GetPersonasSelect,GetMedicosSelect, CreateExamen} from './../../../query/consultas';
+import { NotificacionNitabara } from '../../Etiquetas/Notificar';
+import { GetDateToMommentTime } from '../../../helpers/GetDate';
 const { Option } = Select;
 
 const AddExamen = () => {
@@ -13,6 +15,7 @@ const AddExamen = () => {
     const [New_Doctores, SetNew_Doctores] = useState(false);
     const [GetPacientes, { loading:Cargando_Pacientes, error:Error_Pacientes, data:Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
     const [GetMedicos, { loading:Cargando_Medicos, error:Error_Medicos, data:Data_Medicos }] = useLazyQuery(GetMedicosSelect);
+    const [SetExamen, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useMutation(CreateExamen);
 
     React.useEffect(() => {
         GetPacientes();
@@ -20,7 +23,15 @@ const AddExamen = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        SetExamen({ variables: {
+            Usuario:parseInt(localStorage.ID_USER),
+            Paciente:values.Paciente,
+            Medico:values.Medico,
+            Descripcion:values.Descripcion,
+            Precio:parseFloat(values.Precio)
+        } });
+        form.resetFields();
+        NotificacionNitabara('success','NITABARA','Laboratorio registrado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
