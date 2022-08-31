@@ -40,6 +40,17 @@ const columns = [
     render: (text) => <b>{text.Usuario.Usuario}</b>
   },
   {
+    title: 'Atencion',
+    dataIndex: 'PersonaCirugia',
+    key: 'ID+Math.random()',
+    render: (text) => {
+      if (text != null) {
+        return <b>{text.HoraAtencion}</b>
+      }
+      return "";
+    }
+  },
+  {
     title: 'Pago',
     dataIndex: 'Pago',
     key: 'ID+Math.random()',

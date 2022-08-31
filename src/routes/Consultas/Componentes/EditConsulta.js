@@ -4,10 +4,11 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import NuevoCliente from '../../Clientes/Componentes/NuevoCliente';
 import NuevoMedico from '../../Medicos/Componentes/NuevoMedico';
-import {GetPersonasSelect,GetMedicosSelect, Consulta} from './../../../query/consultas';
+import {GetPersonasSelect,GetMedicosSelect, Consulta, NitaEditConsulta} from './../../../query/consultas';
 import { GetDateToMommentTime } from '../../../helpers/GetDate';
 import { useParams } from 'react-router';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
+import Cargando from '../../Etiquetas/Cargando';
 import moment from 'moment';
 const { Option } = Select;
 
@@ -20,14 +21,13 @@ const EditConsulta = () => {
     const [GetPacientes, { loading:Cargando_Pacientes, error:Error_Pacientes, data:Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
     const [GetMedicos, { loading:Cargando_Medicos, error:Error_Medicos, data:Data_Medicos }] = useLazyQuery(GetMedicosSelect);
     const [GetConsultaAPI, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useLazyQuery(Consulta);
+    const [SetConsulta, { loading:Cargando_SetConsulta, error:Error_SetConsulta, data:Data_SetConsulta }] = useMutation(NitaEditConsulta);
 
     React.useEffect(() => {
         GetConsultaAPI({ variables: {ID:parseInt(ID)}}).then(({ data }) => {
             if (data.Consulta!=null) {
-                alert("SI");
                 SetDATA(data.Consulta);
             }else{
-                alert("NO");
                 SetDATA(null);
             }
           })
@@ -39,8 +39,16 @@ const EditConsulta = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log(GetDateToMommentTime(values.Hora));
-        console.log('Success:', values);
+        SetConsulta({ variables: {
+            ID:parseInt(ID),
+            Usuario:parseInt(localStorage.ID_USER),
+            Paciente:values.Paciente,
+            Medico:values.Medico,
+            Descripcion:values.Descripcion,
+            Hora:GetDateToMommentTime(values.Hora),
+            Precio:parseFloat(values.Precio)
+        } });
+        NotificacionNitabara('success','NITABARA','Consulta editada exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -70,16 +78,20 @@ const EditConsulta = () => {
     };
 
     if (DATA == null) {
-        return (<h1>NOO</h1>);
+        return (
+            <Card title="Cargando" bordered={false} style={{ width: '100%',textAlign:'center' }}>
+                <Cargando />
+            </Card>
+        );
     }else{
         return (
-            <Card title="Consulta ID:1" bordered={false} style={{ width: '100%' }}>
+            <Card title={'Consulta ID: '+ID} bordered={false} style={{ width: '100%' }}>
                 <Form form={form} initialValues={{
-                Paciente:DATA.Persona.ID,
-                Medico:DATA.Medico.ID,
-                Descripcion:DATA.Descripcion,
-                Hora:moment(DATA.Hora),
-                Precio:DATA.Pago.Total
+                Paciente:DATA.Persona != null ? DATA.Persona.ID : "",
+                Medico:DATA.Medico != null ? DATA.Medico.ID : "",
+                Descripcion:DATA.Descripcion != null ? DATA.Descripcion : "",
+                Hora:DATA.Hora != null ? moment(DATA.Hora) : "",
+                Precio:DATA.Pago != null ? DATA.Pago.Total : ""
                 }} layout="vertical" hideRequiredMark onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
                     <Row gutter={16}>
                         <Col span={12}>

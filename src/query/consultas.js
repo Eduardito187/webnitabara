@@ -658,6 +658,10 @@ query Cirugias{
         State
       }
     }
+    PersonaCirugia {
+      ID
+      HoraAtencion
+    }
     Pago {
       ID
       Total
@@ -703,6 +707,10 @@ query Cirugia($ID: Int!){
         State
       }
     }
+    PersonaCirugia {
+      ID
+      HoraAtencion
+    }
     Pago {
       ID
       Total
@@ -720,6 +728,29 @@ export const CreateCirugia = gql `
     $Precio: Float!
   ) {
     CreateCirugia(
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Hora: $Hora
+      Precio: $Precio
+    ){
+      response
+    }
+  }
+`;
+export const NitaEditCirugia = gql `
+  mutation EditCirugia(
+    $ID: Int!
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Hora: String!
+    $Precio: Float!
+  ) {
+    EditCirugia(
+      ID: $ID
       Usuario: $Usuario
       Paciente: $Paciente
       Medico: $Medico
@@ -752,6 +783,29 @@ export const CreateConsulta = gql `
     }
   }
 `;
+export const NitaEditConsulta = gql `
+  mutation EditConsulta(
+    $ID: Int!
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Hora: String!
+    $Precio: Float!
+  ) {
+    EditConsulta(
+      ID: $ID
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Hora: $Hora
+      Precio: $Precio
+    ){
+      response
+    }
+  }
+`;
 export const CreateExamen = gql `
   mutation CreateExamen(
     $Usuario: Int!
@@ -761,6 +815,27 @@ export const CreateExamen = gql `
     $Precio: Float!
   ) {
     CreateExamen(
+      Usuario: $Usuario
+      Paciente: $Paciente
+      Medico: $Medico
+      Descripcion: $Descripcion
+      Precio: $Precio
+    ){
+      response
+    }
+  }
+`;
+export const NitaEditExamen = gql `
+  mutation EditExamen(
+    $ID: Int!
+    $Usuario: Int!
+    $Paciente: Int!
+    $Medico: Int!
+    $Descripcion: String!
+    $Precio: Float!
+  ) {
+    EditExamen(
+      ID: $ID
       Usuario: $Usuario
       Paciente: $Paciente
       Medico: $Medico

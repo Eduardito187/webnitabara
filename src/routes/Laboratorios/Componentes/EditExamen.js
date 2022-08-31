@@ -4,9 +4,10 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import NuevoCliente from '../../Clientes/Componentes/NuevoCliente';
 import NuevoMedico from '../../Medicos/Componentes/NuevoMedico';
-import {GetPersonasSelect,GetMedicosSelect, GetExamen} from './../../../query/consultas';
+import {GetPersonasSelect,GetMedicosSelect, GetExamen, NitaEditExamen} from './../../../query/consultas';
 import { GetDateToMommentTime } from '../../../helpers/GetDate';
 import { useParams } from 'react-router';
+import Cargando from '../../Etiquetas/Cargando';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
 const { Option } = Select;
 
@@ -19,14 +20,13 @@ const EditExamen = () => {
     const [GetPacientes, { loading:Cargando_Pacientes, error:Error_Pacientes, data:Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
     const [GetMedicos, { loading:Cargando_Medicos, error:Error_Medicos, data:Data_Medicos }] = useLazyQuery(GetMedicosSelect);
     const [GetGetExamenAPI, { loading:Cargando_GetExamen, error:Error_GetExamen, data:Data_GetExamen }] = useLazyQuery(GetExamen);
+    const [SetExamen, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useMutation(NitaEditExamen);
 
     React.useEffect(() => {
         GetGetExamenAPI({ variables: {ID:parseInt(ID)}}).then(({ data }) => {
             if (data.Examen!=null) {
-                alert("SI");
                 SetDATA(data.Examen);
             }else{
-                alert("NO");
                 SetDATA(null);
             }
           })
@@ -39,7 +39,15 @@ const EditExamen = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        SetExamen({ variables: {
+            ID:parseInt(ID),
+            Usuario:parseInt(localStorage.ID_USER),
+            Paciente:values.Paciente,
+            Medico:values.Medico,
+            Descripcion:values.Descripcion,
+            Precio:parseFloat(values.Precio)
+        }});
+        NotificacionNitabara('success','NITABARA','Laboratorio editado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -69,15 +77,19 @@ const EditExamen = () => {
     };
 
     if (DATA == null) {
-        return (<h1>NOO</h1>);
+        return (
+            <Card title="Cargando" bordered={false} style={{ width: '100%',textAlign:'center' }}>
+                <Cargando />
+            </Card>
+        );
     }else{
         return (
-            <Card title="Laboratorio ID:1" bordered={false} style={{ width: '100%' }}>
+            <Card title={'Laboratorio ID: '+ID} bordered={false} style={{ width: '100%' }}>
                 <Form form={form} initialValues={{
-                    Paciente:DATA.Persona.ID,
-                    Medico:DATA.Medico.ID,
-                    Descripcion:DATA.Descripcion,
-                    Precio:DATA.Pago.Total
+                    Paciente:DATA.Persona != null ? DATA.Persona.ID : "",
+                    Medico:DATA.Medico != null ? DATA.Medico.ID : "",
+                    Descripcion:DATA.Descripcion != null ? DATA.Descripcion : "",
+                    Precio:DATA.Pago.Total != null ? DATA.Pago.Total : ""
                     }} layout="vertical" hideRequiredMark onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
                     <Row gutter={16}>
                         <Col span={12}>

@@ -4,10 +4,11 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import NuevoCliente from '../../Clientes/Componentes/NuevoCliente';
 import NuevoMedico from '../../Medicos/Componentes/NuevoMedico';
-import {GetPersonasSelect,GetMedicosSelect, Cirugia} from './../../../query/consultas';
+import {GetPersonasSelect,GetMedicosSelect, Cirugia, NitaEditCirugia} from './../../../query/consultas';
 import { GetDateToMommentTime } from '../../../helpers/GetDate';
 import { useParams } from 'react-router';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
+import Cargando from '../../Etiquetas/Cargando';
 import moment from 'moment';
 const { Option } = Select;
 
@@ -20,6 +21,7 @@ const EditCirugia = () => {
     const [GetPacientes, { loading:Cargando_Pacientes, error:Error_Pacientes, data:Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
     const [GetMedicos, { loading:Cargando_Medicos, error:Error_Medicos, data:Data_Medicos }] = useLazyQuery(GetMedicosSelect);
     const [GetCirugiaAPI, { loading:Cargando_Cirugia, error:Error_Cirugia, data:Data_Cirugia }] = useLazyQuery(Cirugia);
+    const [SetCirugia, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useMutation(NitaEditCirugia);
 
     React.useEffect(() => {
         GetPacientes();
@@ -27,10 +29,8 @@ const EditCirugia = () => {
         
         GetCirugiaAPI({ variables: {ID:parseInt(ID)}}).then(({ data }) => {
             if (data.Cirugia!=null) {
-                alert("SI");
                 SetDATA(data.Cirugia);
             }else{
-                alert("NO");
                 SetDATA(null);
             }
           })
@@ -40,7 +40,16 @@ const EditCirugia = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        SetCirugia({ variables: {
+            ID:parseInt(ID),
+            Usuario:parseInt(localStorage.ID_USER),
+            Paciente:values.Paciente,
+            Medico:values.Medico,
+            Descripcion:values.Descripcion,
+            Hora:GetDateToMommentTime(values.Hora),
+            Precio:parseFloat(values.Precio)
+        } });
+        NotificacionNitabara('success','NITABARA','Cirugia editada exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -70,16 +79,20 @@ const EditCirugia = () => {
     };
 
     if (DATA == null) {
-        return (<h1>NOO</h1>);
+        return (
+            <Card title="Cargando" bordered={false} style={{ width: '100%',textAlign:'center' }}>
+                <Cargando />
+            </Card>
+        );
     }else{
         return (
-            <Card title="Cirugia ID:1" bordered={false} style={{ width: '100%' }}>
+            <Card title={'Cirugia ID: '+ID} bordered={false} style={{ width: '100%' }}>
                 <Form form={form} initialValues={{
-                    Paciente:DATA.Persona.ID,
-                    Medico:DATA.Medico.ID,
-                    Descripcion:DATA.Descripcion,
-                    Hora:moment(DATA.Hora),
-                    Precio:DATA.Pago.Total
+                    Paciente:DATA.Persona != null ? DATA.Persona.ID : "",
+                    Medico:DATA.Medico != null ? DATA.Medico.ID : "",
+                    Descripcion:DATA.Descripcion != null ? DATA.Descripcion : "",
+                    Hora:DATA.PersonaCirugia != null ? moment(DATA.PersonaCirugia.HoraAtencion) : "",
+                    Precio:DATA.Pago != null ? DATA.Pago.Total: ""
                     }} layout="vertical" hideRequiredMark onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" >
                     <Row gutter={16}>
                         <Col span={12}>
