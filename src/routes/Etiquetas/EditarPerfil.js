@@ -31,7 +31,7 @@ const EditarPerfil = (props) => {
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     },[]);
 
@@ -61,11 +61,11 @@ const EditarPerfil = (props) => {
                 }
             }
             if (x == false) {
-                NotificacionNitabara('Error','NITABARA','Error en API.');
+                NotificacionNitabara('error','NITABARA','Error en API.');
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     };
 

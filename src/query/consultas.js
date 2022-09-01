@@ -846,3 +846,69 @@ export const NitaEditExamen = gql `
     }
   }
 `;
+export const DeleteCirugia = gql `
+mutation DeleteCirugia(
+  $ID: Int!
+  ) {
+    DeleteCirugia(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const DeleteConsulta = gql `
+mutation DeleteConsulta(
+  $ID: Int!
+  ) {
+    DeleteConsulta(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const DeleteExamen = gql `
+mutation DeleteExamen(
+  $ID: Int!
+  ) {
+    DeleteExamen(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const MultipleDeleteCirugia = gql `
+mutation ListDeleteCirugia(
+  $ID: [Int]!
+  ) {
+    ListDeleteCirugia(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const MultipleDeleteConsulta = gql `
+mutation ListDeleteConsulta(
+  $ID: [Int]!
+  ) {
+    ListDeleteConsulta(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const MultipleDeleteExamen = gql `
+mutation ListDeleteExamen(
+  $ID: [Int]!
+  ) {
+    ListDeleteExamen(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;

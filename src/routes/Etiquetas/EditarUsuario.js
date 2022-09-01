@@ -32,7 +32,7 @@ const EditarUsuario = (props) => {
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     },[]);
 
@@ -46,11 +46,11 @@ const EditarUsuario = (props) => {
                 }
             }
             if (x == false) {
-                NotificacionNitabara('Error','NITABARA','Error en API.');
+                NotificacionNitabara('error','NITABARA','Error en API.');
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     }
 
@@ -80,11 +80,11 @@ const EditarUsuario = (props) => {
                 }
             }
             if (x == false) {
-                NotificacionNitabara('Error','NITABARA','Error en API.');
+                NotificacionNitabara('error','NITABARA','Error en API.');
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     };
 

@@ -35,7 +35,7 @@ const EditCirugia = () => {
             }
           })
           .catch(e => {
-            NotificacionNitabara('Error','NITABARA','Error en API.');
+            NotificacionNitabara('error','NITABARA','Error en API.');
           });
     }, []);
 
