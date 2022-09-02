@@ -46,6 +46,7 @@ const RolesMenu = (props) => {
       localStorage.ID_ROL_ACTUAL=obj[0]["Rol"]["ID"];
       localStorage.NAME_ROL_ACTUAL=obj[0]["Rol"]["Rol"];
     }
+    window.location.reload();
     SetRolSelectActual(localStorage.NAME_ROL_ACTUAL);
     SetRolesComponent(x);
   }
