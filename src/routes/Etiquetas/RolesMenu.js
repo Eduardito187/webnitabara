@@ -35,7 +35,7 @@ const RolesMenu = (props) => {
     for (let index = 0; index < obj.length; index++) {
       x.push({
         label: (
-          <b onClick={()=>SetRolSelectActual(obj[index]["Rol"]["Rol"])}>
+          <b onClick={()=>SelectRol(obj[index]["Rol"])}>
           {obj[index]["Rol"]["Rol"]}
           </b>
           ),
@@ -46,9 +46,14 @@ const RolesMenu = (props) => {
       localStorage.ID_ROL_ACTUAL=obj[0]["Rol"]["ID"];
       localStorage.NAME_ROL_ACTUAL=obj[0]["Rol"]["Rol"];
     }
-    window.location.reload();
     SetRolSelectActual(localStorage.NAME_ROL_ACTUAL);
     SetRolesComponent(x);
+  }
+  function SelectRol(Rol) {
+    SetRolSelectActual(Rol.Rol);
+    localStorage.ID_ROL_ACTUAL=Rol.ID;
+    localStorage.NAME_ROL_ACTUAL=Rol.Rol;
+    window.location.reload();
   }
   function retornarTEXTO(a) {
     if (props.collapsed) {
