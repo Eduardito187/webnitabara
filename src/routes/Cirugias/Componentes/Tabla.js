@@ -6,6 +6,7 @@ import {IrUrlNitabara, Cirugias, MultipleDeleteCirugia} from '../../../query/con
 import Cargando from "../../Etiquetas/Cargando";
 import InfoData from './InfoData';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
+import MarcoRol from '../../Etiquetas/MarcoRol';
 const { Option } = Select;
 
 var DataTabla = [];
@@ -24,7 +25,11 @@ const Tabla = () => {
         title: 'Select',
         dataIndex: 'ID',
         key: 'ID+Math.random()+"_SELECT"',
-        render: (text) => <Checkbox onChange={(e)=>onChangeSelect(e,text)} />
+        render: (text) => (
+          <MarcoRol Codigo="borrar_cirugia" Componente={(
+            <Checkbox onChange={(e)=>onChangeSelect(e,text)} />
+          )} />
+        )
       },
       {
         title: 'ID',
@@ -77,7 +82,11 @@ const Tabla = () => {
         title: 'Accion',
         dataIndex: 'ID',
         key: 'ID+Math.random()',
-        render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/EditarCirugia/"+text)}>Editar</Button>
+        render: (text) => (
+          <MarcoRol Codigo="editar_cirugia" Componente={(
+            <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/EditarCirugia/"+text)}>Editar</Button>
+          )} />
+        )
       },
       {
         title: 'Accion',
@@ -149,7 +158,7 @@ const Tabla = () => {
         }else{
           NotificacionNitabara('error','NITABARA','Error al eliminar.');
         }
-        RecolectarApi();
+        window.location.reload();
       })
       .catch(e => {
         NotificacionNitabara('error','NITABARA','Error en API.');
@@ -178,37 +187,37 @@ const Tabla = () => {
           <Col span={10} style={{textAlign:'left'}}>
             {
               ShowDelete
-              ? (<Button type="primary" onClick={()=>EliminarMultiplesApi()} style={{backgroundColor:'red',borderColor:'red',marginRight:'10px'}}>Eliminar</Button>)
+              ? (
+                <MarcoRol Codigo="borrar_cirugia" Componente={(<Button type="primary" onClick={()=>EliminarMultiplesApi()} style={{backgroundColor:'red',borderColor:'red',marginRight:'10px'}}>Eliminar</Button>)} />
+              )
               : null
             }
-            <Button type="primary" onClick={()=>IrUrlNitabara("/NuevaCirugia")}>
-              Registrar Cirugia
-            </Button>
-            <Button type="success" style={{marginLeft:'10px'}} onClick={()=>exportarExcel}>
-              Exportar Data
-            </Button>
+            <MarcoRol Codigo="agregar_cirugia" Componente={(<Button type="primary" style={{marginLeft:'10px'}} onClick={()=>IrUrlNitabara("/NuevaCirugia")}>Registrar Cirugia</Button>)} />
+            <Button type="success" style={{marginLeft:'10px'}} onClick={()=>exportarExcel}>Exportar Data</Button>
           </Col>
           <Col span={8}>
           </Col>
           <Col span={6}>
-            <Row gutter={16}>
-              <Col span={8}>
-                <Select style={{width:'100%'}} placeholder="Filtro" optionFilterProp="children" onChange={onChange} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())} >
-                  <Option value="Paciente">Paciente</Option>
-                  <Option value="Medico">Medico</Option>
-                  <Option value="Especialidad">Especialidad</Option>
-                </Select>
-              </Col>
-              <Col span={16}>
-                <Input.Search allowClear style={{width:'100%'}} defaultValue="" />
-              </Col>
-            </Row>
+            <MarcoRol Codigo="ver_cirugia" Componente={(
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Select style={{width:'100%'}} placeholder="Filtro" optionFilterProp="children" onChange={onChange} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())} >
+                    <Option value="Paciente">Paciente</Option>
+                    <Option value="Medico">Medico</Option>
+                    <Option value="Especialidad">Especialidad</Option>
+                  </Select>
+                </Col>
+                <Col span={16}>
+                  <Input.Search allowClear style={{width:'100%'}} defaultValue="" />
+                </Col>
+              </Row>
+            )} />
           </Col>
         </Row>
         <Divider />
         {
           DataShow
-          ? <Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />
+          ? (<MarcoRol Codigo="ver_cirugia" Componente={(<Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />)} />)
           : null
         }
         <Drawer title={DATA != null ? "Cirugia ID : "+DATA.ID : ""} width={720} onClose={()=>SetVerInfoData(false)} visible={VerInfoData} bodyStyle={{paddingBottom: 80,}}

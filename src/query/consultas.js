@@ -912,3 +912,18 @@ mutation ListDeleteExamen(
   }
 }
 `;
+export const ValidarPermisoRango = gql`
+query ValidarPermisoRango(
+  $ID: Int!
+  $Codigo: String!
+  $Rol: Int!
+  ){
+  ValidarPermisoRango(
+    ID:$ID
+    Codigo:$Codigo
+    Rol:$Rol
+    ) {
+      response
+  }
+}
+`;

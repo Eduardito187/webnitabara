@@ -6,6 +6,7 @@ import { useMutation,useLazyQuery } from '@apollo/client';
 import {IrUrlNitabara, Consultas, MultipleDeleteConsulta} from './../../../query/consultas';
 import Cargando from "../../Etiquetas/Cargando";
 import InfoData from './InfoData';
+import MarcoRol from '../../Etiquetas/MarcoRol';
 const { Option } = Select;
 
 var DataTabla = [];
@@ -24,7 +25,11 @@ const Tabla = () => {
         title: 'Select',
         dataIndex: 'ID',
         key: 'ID+Math.random()+"_SELECT"',
-        render: (text) => <Checkbox onChange={(e)=>onChangeSelect(e,text)} />
+        render: (text) => (
+          <MarcoRol Codigo="borrar_consulta" Componente={(
+            <Checkbox onChange={(e)=>onChangeSelect(e,text)} />
+          )} />
+        )
       },
       {
         title: 'ID',
@@ -77,7 +82,11 @@ const Tabla = () => {
         title: 'Accion',
         dataIndex: 'ID',
         key: 'ID+Math.random()',
-        render: (text) => <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/EditarConsulta/"+text)}>Editar</Button>
+        render: (text) => (
+          <MarcoRol Codigo="editar_consulta" Componente={(
+            <Button icon={<EditOutlined />} onClick={()=>IrUrlNitabara("/EditarConsulta/"+text)}>Editar</Button>
+          )} />
+        )
       },
       {
         title: 'Accion',
@@ -152,7 +161,7 @@ const Tabla = () => {
         }else{
           NotificacionNitabara('error','NITABARA','Error al eliminar.');
         }
-        RecolectarApi();
+        window.location.reload();
       })
       .catch(e => {
         NotificacionNitabara('error','NITABARA','Error en API.');
@@ -179,12 +188,12 @@ const Tabla = () => {
           <Col span={10} style={{textAlign:'left'}}>
             {
               ShowDelete
-              ? (<Button type="primary" onClick={()=>EliminarMultiplesApi()} style={{backgroundColor:'red',borderColor:'red',marginRight:'10px'}}>Eliminar</Button>)
+              ? (
+                <MarcoRol Codigo="borrar_consulta" Componente={(<Button type="primary" onClick={()=>EliminarMultiplesApi()} style={{backgroundColor:'red',borderColor:'red',marginRight:'10px'}}>Eliminar</Button>)} />
+                )
               : null
             }
-            <Button type="primary" onClick={()=>IrUrlNitabara("/NuevaConsulta")}>
-              Registrar Consulta
-            </Button>
+            <MarcoRol Codigo="agregar_consulta" Componente={(<Button type="primary" onClick={()=>IrUrlNitabara("/NuevaConsulta")}>Registrar Consulta</Button>)} />
             <Button type="success" style={{marginLeft:'10px'}} onClick={()=>exportarExcel}>
               Exportar Data
             </Button>
@@ -192,6 +201,7 @@ const Tabla = () => {
           <Col span={8}>
           </Col>
           <Col span={6}>
+          <MarcoRol Codigo="ver_consulta" Componente={(
             <Row gutter={16}>
               <Col span={8}>
                 <Select style={{width:'100%'}} placeholder="Filtro" optionFilterProp="children" onChange={onChange} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())} >
@@ -204,12 +214,17 @@ const Tabla = () => {
                 <Input.Search allowClear style={{width:'100%'}} defaultValue="" />
               </Col>
             </Row>
+          )} />
           </Col>
         </Row>
         <Divider />
         {
           DataShow
-          ? <Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />
+          ? (
+            <MarcoRol Codigo="ver_consulta" Componente={(
+              <Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />
+            )} />
+            )
           : null
         }
         <Drawer title={DATA != null ? "Consulta ID : "+DATA.ID : ""} width={720} onClose={()=>SetVerInfoData(false)} visible={VerInfoData} bodyStyle={{paddingBottom: 80,}}
