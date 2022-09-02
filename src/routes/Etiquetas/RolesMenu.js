@@ -35,7 +35,7 @@ const RolesMenu = (props) => {
     for (let index = 0; index < obj.length; index++) {
       x.push({
         label: (
-          <b onClick={()=>SelectRol(obj[index]["Rol"])}>
+          <b onClick={()=>SelectRol(obj[index]["Rol"])} style={{padding:'4px'}}>
           {obj[index]["Rol"]["Rol"]}
           </b>
           ),
