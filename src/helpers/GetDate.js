@@ -8,13 +8,16 @@ export function GetDateToMomment(momment) {
 }
 export function GetDateToMommentTime(momment) {
     if (momment._i!=null) {
-        return momment._i+" "+formatTime(momment._d);
+        return formatDateNita(momment._d)+" "+formatTime(momment._d);
     }else{
-        return formatTimeSpanish(momment._d)+" "+formatTimeSpanish(momment._d);
+        return formatDateNita(momment._d)+" "+formatTimeSpanish(momment._d);
     }
 }
 function formatTimeSpanish(date) {
     return AddCeroToNumber(date.getHours())+":"+AddCeroToNumber(date.getMinutes())+":"+AddCeroToNumber(date.getSeconds());
+}
+function formatDateNita(date) {
+    return AddCeroToNumber(date.getFullYear())+"-"+AddCeroToNumber(date.getMonth())+"-"+AddCeroToNumber(date.getDay());
 }
 function formatTime(date) {
     var d = new Date(date);
