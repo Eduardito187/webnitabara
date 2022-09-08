@@ -94,7 +94,7 @@ const MiPerfil: React.FC = (props) => {
                 <Content className="site-layout-background" style={{margin: '24px 16px',padding: 24,}}>
                     <Row>
                       <Col span={24}>
-                        <Upload name="file" listType="picture-card" className="avatar-uploader" showUploadList={false} action={"hhttp://nitabara.grazcompany.com/upload.php?ID="+localStorage.ID_USER} beforeUpload={beforeUpload} onChange={handleChange} >
+                        <Upload name="file" listType="picture-card" className="avatar-uploader" showUploadList={false} action={"http://nitabara.grazcompany.com/upload.php?ID="+localStorage.ID_USER} beforeUpload={beforeUpload} onChange={handleChange} >
                           {imageUrl ? (
                             <img src={imageUrl} alt="avatar" style={{width: '100%'}}/>
                           ) : (
