@@ -10,8 +10,11 @@ export function GetDateToMommentTime(momment) {
     if (momment._i!=null) {
         return momment._i+" "+formatTime(momment._d);
     }else{
-        return formatDate(momment._d)+" "+formatTime(momment._d);
+        return formatTimeSpanish(momment._d)+" "+formatTimeSpanish(momment._d);
     }
+}
+function formatTimeSpanish(date) {
+    return AddCeroToNumber(date.getHours())+":"+AddCeroToNumber(date.getMinutes())+":"+AddCeroToNumber(date.getSeconds());
 }
 function formatTime(date) {
     var d = new Date(date);
