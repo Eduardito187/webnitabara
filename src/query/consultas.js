@@ -172,6 +172,16 @@ query Usuario($ID:Int!){
   }
 }
 `;
+export const MiFoto =gql`
+query Usuario($ID:Int!){
+  Usuario(ID:$ID) {
+    Perfil {
+      ID
+      URLPublica
+    }
+  }
+}
+`;
 export const AsignadoDeRoles = gql `
   mutation AsignadoDeRoles(
     $ID: Int!
