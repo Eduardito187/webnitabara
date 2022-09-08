@@ -44,7 +44,6 @@ const MiPerfil: React.FC = (props) => {
     GetPerfil({ variables: {ID:parseInt(localStorage.ID_USER)}}).then(({ data }) => {
         if (data.Usuario!=null) {
           if (data.Usuario.Perfil != null) {
-            console.log(data.Usuario.Perfil.URLPublica);
             setImageUrl(data.Usuario.Perfil.URLPublica);
           }
         }

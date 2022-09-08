@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './../../css/Validar.css';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {MiName,IrUrlNitabara} from '../../query/consultas';
+import {MiName,IrUrlNitabara, MiFoto} from '../../query/consultas';
 import { Avatar, Dropdown, Menu,Layout } from 'antd';
 import { UserOutlined,MenuFoldOutlined,MenuUnfoldOutlined } from '@ant-design/icons';
 const { Header, Sider, Content } = Layout;
@@ -10,6 +10,8 @@ var CryptoJS = require("crypto-js");
 function NavMenu(props) {
     const [collapsed, setCollapsed] = useState(false);
     const [UserName,SetUserName] = useState(null);
+    const [imageUrl, setImageUrl] = useState();
+    const [GetPerfil, { loading:Cargando_Data, error:Error_Data, data:Data }] = useLazyQuery(MiFoto);
     const [GetName, { loading:Cargando_Name, error:Error_Name, data:Data_Name }] = useLazyQuery(MiName, {
         variables:{
             ID: parseInt(localStorage.ID_USER)
@@ -21,6 +23,16 @@ function NavMenu(props) {
     });
     useEffect(() => {
         GetName();
+        GetPerfil({ variables: {ID:parseInt(localStorage.ID_USER)}}).then(({ data }) => {
+            if (data.Usuario!=null) {
+              if (data.Usuario.Perfil != null) {
+                setImageUrl(data.Usuario.Perfil.URLPublica);
+              }
+            }
+          })
+          .catch(e => {
+            //
+          });
     }, []);
     function CerrarSession() {
       localStorage.removeItem('ID_USER');
@@ -69,7 +81,7 @@ function NavMenu(props) {
             <div style={{width:'400px',fontWeight:'bold',color:'purple',fontSize:'20px',position:'absolute',zIndex:100,right:'0px'}}>
                 <Dropdown overlay={menu} placement="bottomRight">
                     <span class="pointer">
-                    <Avatar size="large" icon={<UserOutlined />} /><b class="pointer"> {
+                    <Avatar src={imageUrl} size="large" icon={<UserOutlined />} /><b class="pointer"> {
                         UserName != null
                         ? <b>{UserName.Usuario.Persona.Nombre+" "+UserName.Usuario.Persona.Paterno+" "+UserName.Usuario.Persona.Materno}</b>
                         : null
