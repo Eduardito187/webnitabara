@@ -23,7 +23,6 @@ const AddConsulta = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log(values.Hora);
         SetConsulta({ variables: {
             Usuario:parseInt(localStorage.ID_USER),
             Paciente:values.Paciente,
