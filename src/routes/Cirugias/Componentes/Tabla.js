@@ -2,7 +2,7 @@ import {EditOutlined,EyeOutlined} from '@ant-design/icons';
 import { Row, Col, Button, Table, Input, Divider, Tag, Select, Card, Checkbox, Drawer, Space } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {IrUrlNitabara, Cirugias, MultipleDeleteCirugia} from '../../../query/consultas';
+import {IrUrlNitabara, Cirugias, MultipleDeleteCirugia, CirugiasFilter} from '../../../query/consultas';
 import Cargando from "../../Etiquetas/Cargando";
 import InfoData from './InfoData';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
@@ -12,6 +12,7 @@ const { Option } = Select;
 var DataTabla = [];
 const Tabla = () => {
   const [getData, { loading, error, data }] = useLazyQuery(Cirugias);
+  const [getDataFilter, { loading_filter, error_filter, data_filter }] = useLazyQuery(CirugiasFilter);
   const [EliminarMuchos, { loading:Cargando_API, error:Error_API, data:Data_API }] = useMutation(MultipleDeleteCirugia);
   const [Filtro,SetFiltro] = React.useState("");
   const [VerInfoData,SetVerInfoData] = React.useState(false);
@@ -101,8 +102,8 @@ const Tabla = () => {
   }, []);
   const RecolectarApi = () => {
     SetDataShow(false);
-    DataTabla = null;
-    getData().then(({ data }) => {
+    DataTabla = [];
+    getData({fetchPolicy: 'no-cache'}).then(({ data }) => {
       if (data.Cirugias != null) {
         DataTabla = data.Cirugias;
         SetDataShow(true);
@@ -170,6 +171,32 @@ const Tabla = () => {
   const onChange = (value) => {
     SetFiltro(value);
   };
+
+  const onSearch = (value) => {
+    if (Filtro != "") {
+      RecolectarApiFilter(value);
+    }
+  };
+
+  const RecolectarApiFilter = (value) => {
+    SetDataShow(false);
+    DataTabla = [];
+    getDataFilter({
+      variables:{
+        Busqueda: value,
+        Filtro: Filtro
+      },
+      fetchPolicy: 'no-cache'
+    }).then(({ data }) => {
+      if (data.CirugiasFiltro != null) {
+        DataTabla = data.CirugiasFiltro;
+      }
+      SetDataShow(true);
+    })
+    .catch(e => {
+      NotificacionNitabara('error','NITABARA','Error en API.');
+    });
+  };
   const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
   const exportarExcel = () => {
@@ -208,7 +235,7 @@ const Tabla = () => {
                   </Select>
                 </Col>
                 <Col span={16}>
-                  <Input.Search allowClear style={{width:'100%'}} defaultValue="" />
+                  <Input.Search allowClear style={{width:'100%'}} onSearch={onSearch} defaultValue="" />
                 </Col>
               </Row>
             )} />

@@ -937,3 +937,164 @@ query ValidarPermisoRango(
   }
 }
 `;
+
+
+export const CirugiasFilter = gql`
+query CirugiasFiltro(
+  $Busqueda: String!
+  $Filtro: String!
+){
+  CirugiasFiltro(
+    Busqueda:$Busqueda
+    Filtro:$Filtro
+  ) {
+    ID
+    Descripcion
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    PersonaCirugia {
+      ID
+      HoraAtencion
+    }
+    Pago {
+      ID
+      Total
+    }
+  }
+}
+`;
+export const ConsultasFilter = gql`
+query ConsultasFiltro(
+  $Busqueda: String!
+  $Filtro: String!
+){
+  ConsultasFiltro(
+    Busqueda:$Busqueda
+    Filtro:$Filtro
+  ) {
+    ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Descripcion
+      Total
+    }
+    Descripcion
+    Hora
+  }
+}
+`;
+export const ExamenesFilter = gql `
+query ExamenesFiltro(
+  $Busqueda: String!
+  $Filtro: String!
+){
+  ExamenesFiltro(
+    Busqueda:$Busqueda
+    Filtro:$Filtro
+  ) {
+    ID
+    Persona {
+      ID
+      Nombre
+      Paterno
+      Materno
+      CI
+      Correo
+      Telefono
+      Nacimiento
+    }
+    Medico {
+      ID
+      Persona {
+        ID
+        Nombre
+        Paterno
+        Materno
+        CI
+        Correo
+        Telefono
+        Nacimiento
+      }
+      Especialidad {
+        ID
+        Nombre
+        Descripcion
+      }
+      Usuario {
+        ID
+        Usuario
+        State
+      }
+    }
+    Pago {
+      ID
+      Total
+    }
+    Descripcion
+  }
+}
+`;
