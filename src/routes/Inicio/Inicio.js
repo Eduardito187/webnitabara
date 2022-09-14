@@ -7,6 +7,9 @@ import MenuAside from '../Etiquetas/MenuAside';
 import NavMenu from '../Etiquetas/NavMenu';
 import PanelNita from '../Etiquetas/PanelNita';
 import NOLOG from '../Etiquetas/NOLOG';
+import LineChart from '../Etiquetas/LineChart';
+import AreaChart from '../Etiquetas/AreaChart';
+import PieChart from '../Etiquetas/PieChart';
 /*
 
 <RolesMenu key={'role'} />
@@ -26,7 +29,10 @@ const Inicio: React.FC = () => {
         <Layout className="site-layout">
           <NavMenu setCollapsed={setCollapsed} collapsed={collapsed} />
           <Content className="site-layout-background" style={{margin: '24px 16px',padding: 24,}}>
+            <LineChart />
             <PanelNita />
+            <AreaChart />
+            <PieChart />
           </Content>
         </Layout>
       </Layout>
