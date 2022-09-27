@@ -3,10 +3,13 @@ import { Row, Col, Button, Table, Input, Divider, Tag, Select, Card, Checkbox, D
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
+import { PDFViewer } from '@react-pdf/renderer';
+import DoomPDF from './../../Etiquetas/DoomPDF';
 import {ExamenesFilter, GetExamenes,IrUrlNitabara, MultipleDeleteExamen} from './../../../query/consultas';
 import Cargando from "../../Etiquetas/Cargando";
 import InfoData from './InfoData';
 import MarcoRol from '../../Etiquetas/MarcoRol';
+import DoomEXCEL from '../../Etiquetas/DoomEXCEL';
 const { Option } = Select;
 
 var DataTabla = [];
@@ -16,9 +19,19 @@ const Tabla = () => {
   const [EliminarMuchos, { loading:Cargando_API, error:Error_API, data:Data_API }] = useMutation(MultipleDeleteExamen);
   const [Filtro,SetFiltro] = React.useState("");
   const [VerInfoData,SetVerInfoData] = React.useState(false);
+  const [ViewPDF,SetViewPDF] = React.useState(false);
   const [DATA, SetDATA] = React.useState(null);
   const [DataShow,SetDataShow] = React.useState(false);
   const [IDDelete,SetIDDelete] = React.useState([]);
+  const [Columna_EXCEL,SetColumnaExcel] = React.useState([
+    {label:"ID",value: "ID"},
+    {label:"Paciente",value: "Paciente"},
+    {label:"Medico",value: "Medico"},
+    {label:"Especialidad",value: "Especialidad"},
+    {label:"Usuario",value: "Usuario"},
+    {label:"Pago",value: "Pago"}
+  ]);
+  const [Data_EXCEL,SetDataExcel] = React.useState([]);
   const [ShowDelete,SetShowDelete] = React.useState(false);
   const [Columnas,SetColumnas] = React.useState(
     [
@@ -98,6 +111,37 @@ const Tabla = () => {
     getData({fetchPolicy: 'no-cache'}).then(({ data }) => {
       if (data.Examenes != null) {
         DataTabla = data.Examenes;
+        let ARRAY = [];
+        for (let index = 0; index < data.Examenes.length; index++) {
+          console.log(data.Examenes[index]);
+          let paciente = "";
+          let pago = "";
+          let especialidad = "";
+          let usuario = "";
+          let medico = "";
+          if (data.Examenes[index]["Persona"] != null) {
+            paciente = data.Examenes[index]["Persona"]["Nombre"]+" "+data.Examenes[index]["Persona"]["Paterno"]+" "+data.Examenes[index]["Persona"]["Materno"];
+          }
+          if (data.Examenes[index]["Pago"] != null) {
+            pago = data.Examenes[index]["Pago"]["Total"]+" bs";
+          }
+          if (data.Examenes[index]["Medico"] != null) {
+            especialidad = data.Examenes[index]["Medico"]["Especialidad"]["Nombre"];
+            usuario = data.Examenes[index]["Medico"]["Usuario"]["Usuario"];
+            medico = data.Examenes[index]["Medico"]["Persona"]["CI"]+" : "+data.Examenes[index]["Medico"]["Persona"]["Nombre"]
+            +" "+data.Examenes[index]["Medico"]["Persona"]["Paterno"]+" "+data.Examenes[index]["Medico"]["Persona"]["Materno"]+" : "+
+            data.Examenes[index]["Medico"]["Persona"]["Telefono"];
+          }
+          ARRAY.push({
+            "ID" : data.Examenes[index]["ID"],
+            "Paciente" : paciente,
+            "Medico" : medico,
+            "Especialidad" : especialidad,
+            "Usuario" : usuario,
+            "Pago" : pago
+          });
+        }
+        SetDataExcel(ARRAY);
         SetDataShow(true);
       }
     })
@@ -186,10 +230,6 @@ const Tabla = () => {
       NotificacionNitabara('error','NITABARA','Error en API.');
     });
   };
-  const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  const fileExtension = '.xlsx';
-  const exportarExcel = () => {
-  }
 
   if (DataShow == false) {
     return (
@@ -201,7 +241,7 @@ const Tabla = () => {
     return (
       <div>
         <Row gutter={16}>
-          <Col span={10} style={{textAlign:'left'}}>
+          <Col span={10} style={{textAlign:'left',display:'flex'}}>
             {
               ShowDelete
               ? (
@@ -216,9 +256,7 @@ const Tabla = () => {
                 Registro Laboratorio
               </Button>
             )} />
-            <Button type="success" style={{marginLeft:'10px'}} onClick={()=>exportarExcel}>
-              Exportar Data
-            </Button>
+            <DoomEXCEL filename="laboratorio.xlsx" worksheets={[{name: "Laboratorios",columns: Columna_EXCEL,data: Data_EXCEL}]} />
           </Col>
           <Col span={8}>
           </Col>
@@ -242,19 +280,16 @@ const Tabla = () => {
         <Divider />
         {
           DataShow
-          ? (
-            <MarcoRol Codigo="ver_laboratorio" Componente={(
-              <Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />
-            )} />
-          )
+          ? (<MarcoRol Codigo="ver_laboratorio" Componente={(<Table key={'TABLA'} columns={Columnas} dataSource={DataTabla} />)} />)
           : null
         }
-        <Drawer title={DATA != null ? "Laboratorio ID : "+DATA.ID : ""} width={720} onClose={()=>SetVerInfoData(false)} visible={VerInfoData} bodyStyle={{paddingBottom: 80,}}
-            extra={
-            <Space>
-                <Button onClick={()=>SetVerInfoData(false)}>Cancelar</Button>
-            </Space>}>
-            <InfoData DATA={DATA} />
+        <Drawer title={DATA != null ? "Laboratorio ID : "+DATA.ID : ""} width={720} onClose={()=>SetVerInfoData(false)} visible={VerInfoData} bodyStyle={{paddingBottom: 80,}} extra={<Space style={{textAlign:'right',display:'flex'}}><Button class="success" style={{marginRight:'px'}} onClick={()=>SetViewPDF(true)}>PDF</Button><Button onClick={()=>SetVerInfoData(false)}>Cancelar</Button></Space>}>
+          <InfoData DATA={DATA} />
+          <Drawer title={"PDF"} width={720} onClose={()=>SetViewPDF(false)} visible={ViewPDF}>
+            <PDFViewer style={{width:'100%',height:'100%'}}>
+              <DoomPDF Data={DATA} Tipo={'Laboratorio'} />
+            </PDFViewer>
+          </Drawer>
         </Drawer>
       </div>
     );

@@ -14,8 +14,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// Create Document Component
-const DoomPDF = () => (
+const DoomPDF = (props) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -23,6 +22,9 @@ const DoomPDF = () => (
       </View>
       <View style={styles.section}>
         <Text>Section #2</Text>
+      </View>
+      <View style={styles.section}>
+        <Text>Section #3</Text>
       </View>
     </Page>
   </Document>

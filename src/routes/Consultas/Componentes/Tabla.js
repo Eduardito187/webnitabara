@@ -3,7 +3,10 @@ import { Row, Col, Button, Table, Input, Divider, Tag, Select, Card, Checkbox, D
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
+import { PDFViewer } from '@react-pdf/renderer';
+import DoomPDF from './../../Etiquetas/DoomPDF';
 import {IrUrlNitabara, Consultas, MultipleDeleteConsulta, ConsultasFilter} from './../../../query/consultas';
+import DoomEXCEL from '../../Etiquetas/DoomEXCEL';
 import Cargando from "../../Etiquetas/Cargando";
 import InfoData from './InfoData';
 import MarcoRol from '../../Etiquetas/MarcoRol';
@@ -19,7 +22,18 @@ const Tabla = () => {
   const [DATA, SetDATA] = React.useState(null);
   const [DataShow,SetDataShow] = React.useState(false);
   const [IDDelete,SetIDDelete] = React.useState([]);
+  const [ViewPDF,SetViewPDF] = React.useState(false);
   const [ShowDelete,SetShowDelete] = React.useState(false);
+  const [Columna_EXCEL,SetColumnaExcel] = React.useState([
+    {label:"ID",value: "ID"},
+    {label:"Paciente",value: "Paciente"},
+    {label:"Medico",value: "Medico"},
+    {label:"Especialidad",value: "Especialidad"},
+    {label:"Usuario",value: "Usuario"},
+    {label:"Hora",value: "Hora"},
+    {label:"Pago",value: "Pago"}
+  ]);
+  const [Data_EXCEL,SetDataExcel] = React.useState([]);
   const [Columnas,SetColumnas] = React.useState(
     [
       {
@@ -109,6 +123,38 @@ const Tabla = () => {
     getData({fetchPolicy: 'no-cache'}).then(({ data }) => {
       if (data.Consultas != null) {
         DataTabla = data.Consultas;
+        let ARRAY = [];
+        for (let index = 0; index < data.Consultas.length; index++) {
+          console.log(data.Consultas[index]);
+          let paciente = "";
+          let pago = "";
+          let especialidad = "";
+          let usuario = "";
+          let medico = "";
+          if (data.Consultas[index]["Persona"] != null) {
+            paciente = data.Consultas[index]["Persona"]["Nombre"]+" "+data.Consultas[index]["Persona"]["Paterno"]+" "+data.Consultas[index]["Persona"]["Materno"];
+          }
+          if (data.Consultas[index]["Pago"] != null) {
+            pago = data.Consultas[index]["Pago"]["Total"]+" bs";
+          }
+          if (data.Consultas[index]["Medico"] != null) {
+            especialidad = data.Consultas[index]["Medico"]["Especialidad"]["Nombre"];
+            usuario = data.Consultas[index]["Medico"]["Usuario"]["Usuario"];
+            medico = data.Consultas[index]["Medico"]["Persona"]["CI"]+" : "+data.Consultas[index]["Medico"]["Persona"]["Nombre"]
+            +" "+data.Consultas[index]["Medico"]["Persona"]["Paterno"]+" "+data.Consultas[index]["Medico"]["Persona"]["Materno"]+" : "+
+            data.Consultas[index]["Medico"]["Persona"]["Telefono"];
+          }
+          ARRAY.push({
+            "ID" : data.Consultas[index]["ID"],
+            "Paciente" : paciente,
+            "Medico" : medico,
+            "Especialidad" : especialidad,
+            "Usuario" : usuario,
+            "Hora" : data.Consultas[index]["Hora"],
+            "Pago" : pago
+          });
+        }
+        SetDataExcel(ARRAY);
         SetDataShow(true);
       }
     })
@@ -196,11 +242,6 @@ const Tabla = () => {
       NotificacionNitabara('error','NITABARA','Error en API.');
     });
   };
-  const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  const fileExtension = '.xlsx';
-  const exportarExcel = () => {
-  }
-
   if (DataShow == false) {
     return (
       <Card title="Cargando" bordered={false} style={{ width: '100%',textAlign:'center' }}>
@@ -211,7 +252,7 @@ const Tabla = () => {
     return (
       <div>
         <Row gutter={16}>
-          <Col span={10} style={{textAlign:'left'}}>
+          <Col span={10} style={{textAlign:'left',display:'flex'}}>
             {
               ShowDelete
               ? (
@@ -220,9 +261,7 @@ const Tabla = () => {
               : null
             }
             <MarcoRol Codigo="agregar_consulta" Componente={(<Button type="primary" onClick={()=>IrUrlNitabara("/NuevaConsulta")}>Registrar Consulta</Button>)} />
-            <Button type="success" style={{marginLeft:'10px'}} onClick={()=>exportarExcel}>
-              Exportar Data
-            </Button>
+            <DoomEXCEL filename="consultas.xlsx" worksheets={[{name: "Consultas",columns: Columna_EXCEL,data: Data_EXCEL}]} />
           </Col>
           <Col span={8}>
           </Col>
@@ -255,10 +294,16 @@ const Tabla = () => {
         }
         <Drawer title={DATA != null ? "Consulta ID : "+DATA.ID : ""} width={720} onClose={()=>SetVerInfoData(false)} visible={VerInfoData} bodyStyle={{paddingBottom: 80,}}
             extra={
-            <Space>
-                <Button onClick={()=>SetVerInfoData(false)}>Cancelar</Button>
+            <Space style={{textAlign:'right',display:'flex'}}>
+              <Button class="success" style={{marginRight:'px'}} onClick={()=>SetViewPDF(true)}>PDF</Button>
+              <Button onClick={()=>SetVerInfoData(false)}>Cancelar</Button>
             </Space>}>
             <InfoData DATA={DATA} />
+            <Drawer title={"PDF"} width={720} onClose={()=>SetViewPDF(false)} visible={ViewPDF}>
+              <PDFViewer style={{width:'100%',height:'100%'}}>
+                <DoomPDF Data={DATA} Tipo={'Laboratorio'} />
+              </PDFViewer>
+            </Drawer>
         </Drawer>
       </div>
     );
