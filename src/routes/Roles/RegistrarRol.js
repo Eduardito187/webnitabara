@@ -105,7 +105,7 @@ const RegistrarRol: React.FC = () => {
                                 <Input placeholder="Nombre Rol" onChange={(a)=>cambioTexto(a)} />
                             </Form.Item>
                             <Form.Item name="Permisos" label="Permisos" >
-                                <Transfer showSearch dataSource={mockData} listStyle={{width: 300,height: 300,textAlign:'left'}} targetKeys={targetKeys} onChange={handleChange} render={renderItem} />
+                                <Transfer showSearch dataSource={mockData} listStyle={{width: 500,height: 300,textAlign:'left'}} targetKeys={targetKeys} onChange={handleChange} render={renderItem} />
                             </Form.Item>
                             {
                                 NameText.length>3
