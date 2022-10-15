@@ -67,6 +67,7 @@ const EditConsulta = () => {
         SetNew_Pacientes(true);
     };
     const onClosePacientes = () => {
+        GetPacientes();
         SetNew_Pacientes(false);
     };
 
@@ -74,6 +75,7 @@ const EditConsulta = () => {
         SetNew_Doctores(true);
     };
     const onCloseDoctores = () => {
+        GetMedicos();
         SetNew_Doctores(false);
     };
 

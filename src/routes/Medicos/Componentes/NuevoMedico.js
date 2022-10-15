@@ -1,12 +1,14 @@
 import { Row, Col, Table, Input, Divider, Button, DatePicker, Drawer, Form, Select, Space,Card } from 'antd';
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
-import {Ciudades,NuevoUsuario,TiposDocumentos,Barrios,Zonas,GetEspecialidades} from './../../../query/consultas';
+import {Ciudades,NuevoUsuario,TiposDocumentos,Barrios,Zonas,GetEspecialidades, Nuevo_Medico} from './../../../query/consultas';
+import { GetDateToMomment } from '../../../helpers/GetDate';
+import { NotificacionNitabara } from '../../Etiquetas/Notificar';
 const { Option } = Select;
 
 const NuevoMedico = () => {
     const [form] = Form.useForm();
-    const [SetUser, { loading:Cargando_User, error:Error_User, data:Data_User }] = useMutation(NuevoUsuario);
+    const [SetUser, { loading:Cargando_User, error:Error_User, data:Data_User }] = useMutation(Nuevo_Medico);
     const [GetCiudad, { loading:Cargando_Ciudad, error:Error_Ciudad, data:Data_Ciudades }] = useLazyQuery(Ciudades);
     const [GetBarrios, { loading:Cargando_Barrio, error:Error_Barrio, data:Data_Barrios }] = useLazyQuery(Barrios);
     const [GetTipoDoc, { loading:Cargando_TipoDoc, error:Error__TipoDoc, data:Data_TipoDoc }] = useLazyQuery(TiposDocumentos);
@@ -22,7 +24,26 @@ const NuevoMedico = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        SetUser({ variables: {
+            Email: values.Correo,
+            Telefono: values.Telefono,
+            barrio: values.Barrio,
+            calle: values.Calle,
+            casa: values.Casa,
+            ci: values.CI,
+            ciudad: values.Ciudad,
+            contra: values.Contra,
+            documento: values.Documento,
+            materno: values.Materno,
+            paterno: values.Paterno,
+            nombre: values.Nombre,
+            usuario: values.Usuario,
+            zona: values.Zona,
+            especialidad: values.Especialidad,
+            nacimiento: GetDateToMomment(values.Nacimiento)
+        } });
+        form.resetFields();
+        NotificacionNitabara('success','NITABARA','Medico registrado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {

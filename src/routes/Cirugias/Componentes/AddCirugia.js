@@ -51,6 +51,7 @@ const AddCirugia = () => {
         SetNew_Pacientes(true);
     };
     const onClosePacientes = () => {
+        GetPacientes();
         SetNew_Pacientes(false);
     };
 
@@ -58,6 +59,7 @@ const AddCirugia = () => {
         SetNew_Doctores(true);
     };
     const onCloseDoctores = () => {
+        GetMedicos();
         SetNew_Doctores(false);
     };
 

@@ -383,6 +383,47 @@ export const NuevoUsuario = gql `
     }
   }
 `;
+export const Nuevo_Medico = gql `
+  mutation Registrar_Medico(
+    $Email: String!
+    $Telefono: String!
+    $barrio: Int!
+    $calle: String!
+    $casa: String!
+    $ci: String!
+    $ciudad: Int!
+    $contra: String!
+    $documento: Int!
+    $materno: String!
+    $paterno: String!
+    $nombre: String!
+    $usuario: String!
+    $zona: Int!
+    $especialidad: Int!
+    $nacimiento: String!
+  ) {
+    Registrar_Medico(
+      Email: $Email
+      Telefono: $Telefono
+      barrio: $barrio
+      calle: $calle
+      casa: $casa
+      ci: $ci
+      ciudad: $ciudad
+      contra: $contra
+      documento: $documento
+      materno: $materno
+      paterno: $paterno
+      nombre: $nombre
+      usuario: $usuario
+      zona: $zona
+      especialidad: $especialidad
+      nacimiento: $nacimiento
+    ){
+      response
+    }
+  }
+`;
 export const EditarUsuarioAPI = gql `
   query Usuario($ID: Int!) {
     Usuario(ID: $ID) {

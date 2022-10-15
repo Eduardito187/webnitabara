@@ -2,6 +2,8 @@ import { Row, Col, Table, Input, Divider, Button, DatePicker, Drawer, Form, Sele
 import React, { useState } from 'react';
 import { useMutation,useLazyQuery } from '@apollo/client';
 import {Ciudades,NuevoUsuario,TiposDocumentos,Barrios,Zonas} from './../../../query/consultas';
+import { NotificacionNitabara } from '../../Etiquetas/Notificar';
+import { GetDateToMomment } from '../../../helpers/GetDate';
 const { Option } = Select;
 
 const NuevoCliente = () => {
@@ -11,6 +13,7 @@ const NuevoCliente = () => {
     const [GetBarrios, { loading:Cargando_Barrio, error:Error_Barrio, data:Data_Barrios }] = useLazyQuery(Barrios);
     const [GetTipoDoc, { loading:Cargando_TipoDoc, error:Error__TipoDoc, data:Data_TipoDoc }] = useLazyQuery(TiposDocumentos);
     const [GetZonas, { loading:Cargando_Zona, error:Error_Zona, data:Data_Zonas }] = useLazyQuery(Zonas);
+    const [SetConsulta, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useMutation(NuevoUsuario);
 
     React.useEffect(() => {
         GetCiudad();
@@ -20,7 +23,25 @@ const NuevoCliente = () => {
     }, []);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        SetConsulta({ variables: {
+            Email: values.Correo,
+            Telefono: values.Telefono,
+            barrio: values.Barrio,
+            calle: values.Calle,
+            casa: values.Casa,
+            ci: values.CI,
+            ciudad: values.Ciudad,
+            contra: values.Contra,
+            documento: values.Documento,
+            materno: values.Materno,
+            paterno: values.Paterno,
+            nombre: values.Nombre,
+            usuario: values.Usuario,
+            zona: values.Zona,
+            nacimiento: GetDateToMomment(values.Nacimiento)
+        } });
+        form.resetFields();
+        NotificacionNitabara('success','NITABARA','Cliente registrado exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -145,6 +166,18 @@ const NuevoCliente = () => {
                     <Col span={12}>
                         <Form.Item label="Casa" name="Casa" rules={[{required: true,message: 'Ingrese la Direccion!'}]} >
                             <Input placeholder="Casa" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Usuario" name="Usuario" rules={[{required: true,message: 'Ingrese su Usuario!'}]}>
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={16}>
+                    <Col span={12}>
+                        <Form.Item label="Contracenha" name="Contra" rules={[{required: true,message: 'Ingrese la Contracenha!'}]} >
+                            <Input.Password />
                         </Form.Item>
                     </Col>
                 </Row>
