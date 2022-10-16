@@ -978,6 +978,28 @@ query ValidarPermisoRango(
   }
 }
 `;
+export const MultipleListDeleteUsers = gql `
+mutation ListDeleteUsers(
+  $ID: [Int]!
+  ) {
+    ListDeleteUsers(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
+export const MultipleListDeleteRoles = gql `
+mutation ListDeleteRoles(
+  $ID: [Int]!
+  ) {
+    ListDeleteRoles(
+      ID: $ID
+    ) {
+    response
+  }
+}
+`;
 
 
 export const CirugiasFilter = gql`
