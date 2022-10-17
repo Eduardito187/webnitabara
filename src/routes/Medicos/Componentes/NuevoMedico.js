@@ -44,6 +44,7 @@ const NuevoMedico = () => {
         } });
         form.resetFields();
         NotificacionNitabara('success','NITABARA','Medico registrado exitosamente.');
+        window.location.reload();
     };
 
     const onFinishFailed = (errorInfo) => {

@@ -42,6 +42,7 @@ const NuevoCliente = () => {
         } });
         form.resetFields();
         NotificacionNitabara('success','NITABARA','Cliente registrado exitosamente.');
+        window.location.reload();
     };
 
     const onFinishFailed = (errorInfo) => {
