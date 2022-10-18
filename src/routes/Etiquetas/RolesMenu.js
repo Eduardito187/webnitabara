@@ -41,6 +41,12 @@ const RolesMenu = (props) => {
           ),
         key: obj[index]["Rol"]["ID"]+"_ID_ROL",
       });
+      if (localStorage.ID_ROL_ACTUAL != null) {
+        if (localStorage.ID_ROL_ACTUAL == obj[index]["Rol"]["ID"]) {
+          localStorage.ID_ROL_ACTUAL=obj[index]["Rol"]["ID"];
+          localStorage.NAME_ROL_ACTUAL=obj[index]["Rol"]["Rol"];
+        }
+      }
     }
     if (localStorage.ID_ROL_ACTUAL==null) {
       localStorage.ID_ROL_ACTUAL=obj[0]["Rol"]["ID"];

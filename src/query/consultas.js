@@ -14,6 +14,7 @@ export const Validar_LOG = gql `
       ) {
       estado
       id_cuenta
+      id_rol
     }
   }
 `;

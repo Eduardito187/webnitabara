@@ -46,6 +46,7 @@ function Validar() {
       if (data.validacion_login!=null) {
         if (data.validacion_login.estado) {
           localStorage.ID_USER = parseInt(data.validacion_login.id_cuenta);
+          localStorage.ID_ROL_ACTUAL = parseInt(data.validacion_login.id_rol);
           navigate(-1);
           return(
             <div className="cuerpoSUCCESS">
