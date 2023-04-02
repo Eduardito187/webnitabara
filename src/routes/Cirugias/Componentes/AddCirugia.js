@@ -1,10 +1,10 @@
-import { Row, Col, Table, Input, Divider,Tooltip, Button, DatePicker, Drawer, Form, Select, Space,Card,InputNumber } from 'antd';
+import { Row, Col, Table, Input, Divider, Tooltip, Button, DatePicker, Drawer, Form, Select, Space, Card, InputNumber } from 'antd';
 import React, { useState } from 'react';
 import { UserAddOutlined } from '@ant-design/icons';
-import { useMutation,useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import NuevoCliente from '../../Clientes/Componentes/NuevoCliente';
 import NuevoMedico from '../../Medicos/Componentes/NuevoMedico';
-import {GetPersonasSelect,GetMedicosSelect,CreateCirugia} from './../../../query/consultas';
+import { GetPersonasSelect, GetMedicosSelect, CreateCirugia } from './../../../query/consultas';
 import { NotificacionNitabara } from '../../Etiquetas/Notificar';
 import { GetDateToMommentTime } from '../../../helpers/GetDate';
 const { Option } = Select;
@@ -13,9 +13,9 @@ const AddCirugia = () => {
     const [form] = Form.useForm();
     const [New_Pacientes, SetNew_Pacientes] = useState(false);
     const [New_Doctores, SetNew_Doctores] = useState(false);
-    const [GetPacientes, { loading:Cargando_Pacientes, error:Error_Pacientes, data:Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
-    const [GetMedicos, { loading:Cargando_Medicos, error:Error_Medicos, data:Data_Medicos }] = useLazyQuery(GetMedicosSelect);
-    const [SetCirugia, { loading:Cargando_Consulta, error:Error_Consulta, data:Data_Consulta }] = useMutation(CreateCirugia);
+    const [GetPacientes, { loading: Cargando_Pacientes, error: Error_Pacientes, data: Data_Pacientes }] = useLazyQuery(GetPersonasSelect);
+    const [GetMedicos, { loading: Cargando_Medicos, error: Error_Medicos, data: Data_Medicos }] = useLazyQuery(GetMedicosSelect);
+    const [SetCirugia, { loading: Cargando_Consulta, error: Error_Consulta, data: Data_Consulta }] = useMutation(CreateCirugia);
 
     React.useEffect(() => {
         GetPacientes();
@@ -23,16 +23,18 @@ const AddCirugia = () => {
     }, []);
 
     const onFinish = (values) => {
-        SetCirugia({ variables: {
-            Usuario:parseInt(localStorage.ID_USER),
-            Paciente:values.Paciente,
-            Medico:values.Medico,
-            Descripcion:values.Descripcion,
-            Hora:GetDateToMommentTime(values.Hora),
-            Precio:parseFloat(values.Precio)
-        } });
+        SetCirugia({
+            variables: {
+                Usuario: parseInt(localStorage.ID_USER),
+                Paciente: values.Paciente,
+                Medico: values.Medico,
+                Descripcion: values.Descripcion,
+                Hora: GetDateToMommentTime(values.Hora),
+                Precio: parseFloat(values.Precio)
+            }
+        });
         form.resetFields();
-        NotificacionNitabara('success','NITABARA','Cirugia registrada exitosamente.');
+        NotificacionNitabara('success', 'NITABARA', 'Cirugia registrada exitosamente.');
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -41,7 +43,7 @@ const AddCirugia = () => {
     const onChange = (value) => {
         console.log(`selected ${value}`);
     };
-    
+
     const onSearch = (value) => {
         console.log('search:', value);
     };
@@ -75,14 +77,14 @@ const AddCirugia = () => {
                                 </Tooltip>
                             </Col>
                             <Col span={20}>
-                                <Form.Item label="Paciente" name="Paciente" rules={[{required: true,message: 'Ingrese el paciente'}]}>
+                                <Form.Item label="Paciente" name="Paciente" rules={[{ required: true, message: 'Ingrese el paciente' }]}>
                                     <Select showSearch placeholder="Seleccione un paciente" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                                         {
-                                            Data_Pacientes!=null
-                                            ? Data_Pacientes.Personas.map((d) => (
-                                                <Select.Option value={d.ID}>{d.CI+" - "+d.Nombre+" "+d.Paterno+" "+d.Materno}</Select.Option>
-                                            ))
-                                            : null
+                                            Data_Pacientes != null
+                                                ? Data_Pacientes.Personas.map((d) => (
+                                                    <Select.Option value={d.ID}>{d.CI + " - " + d.Nombre + " " + d.Paterno + " " + d.Materno}</Select.Option>
+                                                ))
+                                                : null
                                         }
                                     </Select>
                                 </Form.Item>
@@ -97,14 +99,14 @@ const AddCirugia = () => {
                                 </Tooltip>
                             </Col>
                             <Col span={20}>
-                                <Form.Item label="Medico" name="Medico" rules={[{required: true,message: 'Ingrese su medico'}]}>
+                                <Form.Item label="Medico" name="Medico" rules={[{ required: true, message: 'Ingrese su medico' }]}>
                                     <Select showSearch placeholder="Seleccione un medico" optionFilterProp="children" onChange={onChange} onSearch={onSearch} filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}>
                                         {
-                                            Data_Medicos!=null
-                                            ? Data_Medicos.Medicos.map((d) => (
-                                                <Select.Option value={d.ID}>{d.Persona.CI+" - "+d.Persona.Nombre+" "+d.Persona.Paterno+" "+d.Persona.Materno}</Select.Option>
-                                            ))
-                                            : null
+                                            Data_Medicos != null
+                                                ? Data_Medicos.Medicos.map((d) => (
+                                                    <Select.Option value={d.ID}>{d.Persona.CI + " - " + d.Persona.Nombre + " " + d.Persona.Paterno + " " + d.Persona.Materno}</Select.Option>
+                                                ))
+                                                : null
                                         }
                                     </Select>
                                 </Form.Item>
@@ -114,25 +116,25 @@ const AddCirugia = () => {
                 </Row>
                 <Row gutter={16}>
                     <Col span={24}>
-                        <Form.Item name="Descripcion" label="Descripcion" rules={[{required: true,message: 'Ingrese el descripcion'}]}>
+                        <Form.Item name="Descripcion" label="Descripcion" rules={[{ required: true, message: 'Ingrese el descripcion' }]}>
                             <Input.TextArea rows={4} placeholder="Descripcion" />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col span={12}>
-                        <Form.Item name="Hora" label="Hora de atencion" rules={[{required: true,message: 'Ingrese la hora'}]}>
-                            <DatePicker format={"YYYY-MM-DD HH:mm:ss"} style={{width:'100%'}} />
+                        <Form.Item name="Hora" label="Hora de atencion" rules={[{ required: true, message: 'Ingrese la hora' }]}>
+                            <DatePicker format={"YYYY-MM-DD HH:mm:ss"} style={{ width: '100%' }} />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item name="Precio" label="Precio" rules={[{required: true,message: 'Ingrese el precio'}]}>
-                            <InputNumber min={1} style={{width:'100%'}} />
+                        <Form.Item name="Precio" label="Precio" rules={[{ required: true, message: 'Ingrese el precio' }]}>
+                            <InputNumber min={1} style={{ width: '100%' }} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col span={12} style={{textAlign:'left'}}>
+                    <Col span={12} style={{ textAlign: 'left' }}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Registrar Cirugia
@@ -142,19 +144,19 @@ const AddCirugia = () => {
                 </Row>
             </Form>
 
-            <Drawer title="Registrar Paciente" width={720} onClose={onClosePacientes} visible={New_Pacientes} bodyStyle={{paddingBottom: 80,}}
+            <Drawer title="Registrar Paciente" width={720} onClose={onClosePacientes} visible={New_Pacientes} bodyStyle={{ paddingBottom: 80, }}
                 extra={
-                <Space>
-                    <Button onClick={onClosePacientes}>Cancelar</Button>
-                </Space>}>
+                    <Space>
+                        <Button onClick={onClosePacientes}>Cancelar</Button>
+                    </Space>}>
                 <NuevoCliente />
             </Drawer>
-            <Drawer title="Registrar Medico" width={720} onClose={onCloseDoctores} visible={New_Doctores} bodyStyle={{paddingBottom: 80,}}
+            <Drawer title="Registrar Medico" width={720} onClose={onCloseDoctores} visible={New_Doctores} bodyStyle={{ paddingBottom: 80, }}
                 extra={
-                <Space>
-                    <Button onClick={onCloseDoctores}>Cancelar</Button>
-                </Space>}>
-                    <NuevoMedico />
+                    <Space>
+                        <Button onClick={onCloseDoctores}>Cancelar</Button>
+                    </Space>}>
+                <NuevoMedico />
             </Drawer>
         </Card>
     );

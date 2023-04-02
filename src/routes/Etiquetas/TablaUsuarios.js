@@ -16,6 +16,7 @@ const TablaUsuarios = () => {
   }, []);
 
   const [EliminarMuchos, { loading:Cargando_API, error:Error_API, data:Data_API }] = useMutation(MultipleListDeleteUsers);
+                                                      //aqui esta la consulta
   const [getData, { loading, error, data }] = useLazyQuery(UsuariosLista);
 
   const [Columnas,SetColumnas] = React.useState(

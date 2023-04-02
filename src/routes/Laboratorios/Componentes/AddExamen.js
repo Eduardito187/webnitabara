@@ -129,7 +129,7 @@ const AddExamen = () => {
                     <Col span={12} style={{textAlign:'left'}}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                Registrar Cirugia
+                                Registrar laboratorio
                             </Button>
                         </Form.Item>
                     </Col>

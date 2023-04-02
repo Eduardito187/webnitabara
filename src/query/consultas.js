@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 export function IrUrlNitabara(a) {
   window.location.href = a;
 }
+//aqui estan todas las consultas y mutaciones del sistema
 //mutacion que valida el login
 export const Validar_LOG = gql `
   mutation validacion_login(
